@@ -1,0 +1,654 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name='viewport' content='width=320, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0'>
+<title>search</title>
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js'></script>
+</head>
+<style type="text/css">
+body {
+	margin: 0px;
+	color: #333;
+	font-size: 16px;
+	line-height: 1.4em;
+	font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+	text-align: center;
+	background-color: #EEE;
+	word-break:break-all;
+}
+section {
+	margin: 0px;
+	overflow: hidden;
+	width: 100%;
+}
+a {
+	text-decoration: none;
+	color: #333;
+}
+button {
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;	
+}
+.b-shadow, input[type="checkbox"]:after {
+	box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+	-moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+	-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+}
+.radius3 {
+	border-radius: 0.3em;
+	-moz-border-radius: 0.3em;
+	-webkit-border-radius: 0.3em;
+}
+.radius5 {
+	border-radius: 0.5em;
+	-moz-border-radius: 0.5em;
+	-webkit-border-radius: 0.5em;
+}
+.t-shadow-b {
+	text-shadow:0px -1px 0px rgba(0,0,0,0.3);
+}
+.t-shadow-b2 {
+	text-shadow:0px 1px 0px rgba(0,0,0,0.3);
+}
+.t-shadow-w, .txtBt {
+	text-shadow:0px 1px 0px #FFF;
+}
+.i-block, section, .icon, .push, div, button, input[type="search"], input[type="text"], .goods, select, input, label {
+	vertical-align: top;
+	display: inline-block;
+	appearance: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+}
+.border-box, section, div, button, input[type="search"], input[type="text"], .goods, label {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.move {
+	transition: 0.2s ease-out;
+	-moz-transition: 0.2s ease-out;
+	-webkit-transition: 0.2s ease-out;
+}
+select {
+	padding: 0.5em;
+	background-color: #CCC;
+	border-radius: 0;
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	font-size: 100%;
+}
+#nav {
+	z-index: 5;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	height: 35px;
+	width: 100%;
+	display: block;
+	background-color: rgba(255,255,255,0.7);
+}
+#wrapper {
+	overflow: hidden;
+	position: relative;
+	padding-top: 35px;
+	padding-bottom: 35px;
+}
+.push {
+	font-size: 10px;
+	line-height: 1em;
+	font-weight: bold;
+	color: #FFF;
+	background-color: #F33;
+	border-radius: 1em;
+	-moz-border-radius: 1em;
+	-webkit-border-radius: 1em;
+	padding: 0.3em;
+	min-width: 1em;
+	top: 8px;
+	position: relative;
+}
+.icon {
+	height: 35px;
+	width: 35px;
+	position: absolute;
+}
+#cart_icon {
+	right: 60px;
+}
+#favorit_icon {
+	right: 7px;
+}
+#back_icon {
+	left: 10px;
+	height: 35px;
+	width: 35px;
+	position: absolute;
+	padding-right: 1em;
+}
+#cart_no {
+	right: 50px;
+	position: absolute;
+	height: 35px;
+	width: 50px;
+	top: 0px;
+	display: block;
+}
+#searchBt {
+	background-color: #3C9;
+	height: 60px;
+	width: 60px;
+	padding: 1em;
+}
+#searchTxt {
+	background-color: #CCC;
+	width: 60%;
+	max-width: 400px;
+	height: 60px;
+	font-size: 100%;
+	border-radius: 0;
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	padding-right: 0px;
+	padding-left: 0px;
+}
+#scene1 {
+}
+#scene2 {
+	display: none;
+}
+.s-hr {
+	width: 70%;
+	border-top-width: thin;
+	border-bottom-width: thin;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-top-color: #CCC;
+	border-bottom-color: #FFF;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	margin-right: 15%;
+	margin-left: 15%;
+}
+.st1 {
+	color: #3C9;
+	font-size: 90%;
+}
+.st2  {
+	background-color: #CCC;
+	height: 30px;
+	width: 30px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	padding-left: 10px;
+}
+.st3 {
+	line-height: 2.5em;
+}
+.st4 {
+	display: block;
+	padding-top: 2em;
+}
+p {
+	padding: 0.5em;
+	margin: 0px;
+}
+.historyBt {
+	background-color: #3C9;
+	padding: 1em;
+	color: #FFF;
+	margin: 0.3em;
+	line-height: 1em;
+	font-size: 100%;
+}
+.txtBt {
+	padding: 1em;
+	font-size: 100%;
+	line-height: 1em;
+	margin: 0.3em;
+	color: #09F;
+}
+.goods {
+	background-color: #F9F9F9;
+	width: 100%;
+	padding: 0.5em;
+	border-bottom-width: thin;
+	border-bottom-style: solid;
+	border-bottom-color: #CCC;
+}
+.goods img {
+	float: left;
+	width: 30%;
+	margin-right: 0.5em;
+}
+.goods .name {
+	font-weight: bold;
+	text-align: left;
+	display: block;
+}
+.goods .price {
+	font-size: 90%;
+	font-weight: bold;
+	color: #3C9;
+	float: right;
+	margin-top: 1em;
+	margin-right: 0.5em;
+}
+.goods .off, .goods .star {
+	display: inline-block;
+	height: 1em;
+	width: 40px;
+	font-weight: bold;
+	font-size: 70%;
+	line-height: 1em;
+}
+.goods .off, .goods .star {
+	color: #3C9;
+}
+.goods .off:after {
+	content:"%";
+}
+.goods .star:after {
+	content:"点";
+}
+.star_icon, .down_icon {
+	height: 40px;
+	width: 40px;
+	margin-right: -40px;
+	display: inline-block;
+	margin-bottom: -15px;
+}
+#scene2 button {
+	background-color: #F9F9F9;
+	margin: 0px;
+	border-top-width: thin;
+	border-right-width: thin;
+	border-bottom-width: thin;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-top-color: #3C9;
+	border-right-color: #3C9;
+	border-bottom-color: #3C9;
+	border-left-style: none;
+	padding: 0.5em;
+	color: #3C9;
+}
+#sortBts button:first-child {
+	border-left-width: thin;
+	border-left-style: solid;
+	border-left-color: #3C9;
+	border-top-left-radius: 0.5em;
+	border-bottom-left-radius: 0.5em;
+	-moz-border-radius-topleft: 0.5em;
+	-moz-border-radius-bottomleft: 0.5em;
+	-webkit-border-top-left-radius: 0.5em;
+	-webkit-border-bottom-left-radius: 0.5em;
+}
+#sortBts button:last-child {
+	border-top-right-radius: 0.5em;
+	border-bottom-right-radius: 0.5em;
+	-moz-border-radius-topright: 0.5em;
+	-moz-border-radius-bottomright: 0.5em;
+	-webkit-border-top-right-radius: 0.5em;
+	-webkit-border-bottom-right-radius: 0.5em;
+}
+#scene2 .btOn {
+	color: #FFF;
+	background-color: #3C9;	
+}
+#sortBts{
+	margin-bottom: 1em;
+	display: block;
+}
+#err {
+	background-color: rgba(255,255,255,0.5);
+	position: absolute;
+	z-index: 10;
+	top: 0px;
+}
+#add_term {
+	background-color: #3C9;
+	height: 40px;
+	width: 40px;
+	display: none;
+}
+form {
+	margin: 0px;
+	padding: 0px;
+}
+#terms {
+	display: none;
+}
+label {
+	line-height: 1em;
+	font-size: 80%;
+	width: 50%;
+	max-width: 180px;
+	padding-top: 0.8em;
+	padding-bottom: 0.8em;
+}
+input[type="checkbox"] {
+	background-color: #DDD;
+	width: 60px;
+	height: 30px;
+	border: thin solid #CCC;
+	border-radius: 15px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	font-size: 100%;
+	line-height: 1em;
+}
+input[type="checkbox"]:after {
+	content: "";
+	height: 28px;
+	width: 28px;
+	border-radius: 30px;
+	-moz-border-radius: 15px;
+	-webkit-border-radius: 15px;
+	display: inline-block;
+	background-color: #FFF;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+}
+input[type="checkbox"]:checked {
+	background-color: #3C9;
+	border: thin solid #3C9;
+}
+input[type="checkbox"]:checked:after {
+	content: "";
+	position: relative;
+	left: 30px;
+}
+</style>
+<body>
+<svg class="d-none" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0" height="0" viewBox="0 0 0 0" style="enable-background:new 0 0 0 0;" xml:space="preserve">
+<defs>
+	<g id="cart_icon">
+		<polygon fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke="#06C" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" points="16,18 88,18 83,55 26,55 "/>
+		<circle fill-rule="evenodd" fill="#06C" clip-rule="evenodd" cx="37.5" cy="62.5" r="6"/>
+		<circle fill-rule="evenodd" fill="#06C" clip-rule="evenodd" cx="72.5" cy="62.5" r="6"/>
+		<line fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke="#06C" stroke-linecap="round" stroke-width="3" stroke-linejoin="round" x1="3" y1="3" x2="16" y2="18"/>
+		<circle fill-rule="evenodd" fill="#06C" clip-rule="evenodd" cx="2.5" cy="2.5" r="4"/>
+	</g>
+	<g id="favorit">
+		<polygon fill-rule="evenodd" clip-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" points="75,13.3 93.5,50.5 134.9,56.4 105,85.4 112,126.2 75,106.9 38.1,126.2 45.1,85.4 15.2,56.4 56.5,50.5 "/>
+	</g>
+	<g id="search">
+		<path d="M0.5,33.5c0-18.2,14.8-33,33.1-33c18.3,0,33.1,14.8,33.1,33c0,18.2-14.8,33-33.1,33C15.3,66.5,0.5,51.7,0.5,33.5z"/>
+		<line x1="55.7" y1="57.8" x2="90.5" y2="92.5"/>
+	</g>
+	<g id="down">
+		<polygon points="78,0.5 78,44.5 90.5,44.5 45.5,90.5 0.5,44.5 13,44.5 13,0.5 "/>
+	</g>
+	<g id="close">
+		<circle cx="50" cy="50" r="50"/>
+		<line x1="25" y1="25" x2="75" y2="75"/>
+		<line x1="75" y1="25" x2="25" y2="75"/>
+	</g>
+	<g id="more">
+		<polyline points="0.5,0.5 45.5,45.5 90.5,0.5 "/>
+	</g>
+	<g id="back">
+		<polyline points="45.5,0.5 0.5,45.5 45.5,90.5 "/>
+	</g>
+</defs>
+</svg>
+<article id="wrapper">
+	<section id="nav"> <svg id="back_icon" class="icon" viewBox="-20 -25 150 150" onClick="f_mOpen()">
+		<use xlink:href="#back" fill="none" stroke="#06C" stroke-width="15" stroke-linecap="butt"/>
+		</svg> <svg id="cart_icon" class="icon" viewBox="-3 -3 100 70">
+		<use xlink:href="#cart_icon"/>
+		</svg> <svg id="favorit_icon" class="icon" viewBox="-5 -10 160 160">
+		<use xlink:href="#favorit" fill="none" stroke="#06C" stroke-width="5"/>
+		</svg>
+		<div id=cart_no>
+			<div class=push>5</div>
+		</div>
+		<div id=favorit_no onClick=f_goFavorit()></div>
+	</section>
+	<section id="scene1">
+<form name="form1" onsubmit="f_search();return false;">
+		<div class="st2"><svg id="search_icon" class="" viewBox="-10 -10 120 120">
+		<use xlink:href="#search" fill="none" stroke="#FFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"/></svg></div><input type="search" id="searchTxt" value="" placeholder="検索" onKeyPress="f_key(event.keyCode);"><div class="st2" onClick="f_reset();"><svg viewBox="-5 -5 120 120">
+		<use id="close1" xlink:href="#close" fill="#CCC" stroke="#CCC" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/></svg></div><div id="add_term" onClick="f_addTerm();"><svg viewBox="-50 -75 200 200">
+		<use id="more" xlink:href="#more" fill="none" stroke="#FFF" stroke-width="13" stroke-linecap="butt"/></svg></div>
+		<div id="terms">
+		<span class="st4 st1 t-shadow-w">金額設定</span>
+	<select name="price1">
+    <option selected value="0">0円</option>
+    <option value="1000">1000円</option>
+    <option value="2000">2000円</option>
+	<option value="3000">3000円</option>
+	<option value="4000">4000円</option>
+	<option value="5000">5000円</option>
+	<option value="6000">6000円</option>
+	<option value="7000">7000円</option>
+	<option value="9000">8000円</option>
+	<option value="9000">9000円</option>
+	<option value="10000">10000円</option>
+ 	</select>
+	<span class="st3 st1 t-shadow-w">～</span>
+	<select name="price2">
+    <option selected value="10000000">選択しない</option>
+    <option value="1000">1000円</option>
+    <option value="2000">2000円</option>
+	<option value="3000">3000円</option>
+	<option value="4000">4000円</option>
+	<option value="5000">5000円</option>
+	<option value="6000">6000円</option>
+	<option value="7000">7000円</option>
+	<option value="9000">8000円</option>
+	<option value="9000">9000円</option>
+	<option value="10000">10000円</option>
+	</select>
+	<span class="st4 st1 t-shadow-w">カテゴリを選ぶ</span>
+	<label>レディースファッション<br><input type="checkbox" name="checkbox" value="01"></label><label>ブランド<br><input type="checkbox" name="checkbox" value="02"></label><label>ダイエット＆健康<br><input type="checkbox" name="checkbox" value="03"></label><label>美容＆コスメ<br><input type="checkbox" name="checkbox" value="04"></label><label>生活雑貨＆家電<br><input type="checkbox" name="checkbox" value="05"></label><label>フード＆ドリンク<br><input type="checkbox" name="checkbox" value="06"></label><label>メンズ<br><input type="checkbox" name="checkbox" value="07"></label><label>24バリュー<br><input type="checkbox" name="checkbox" value="0"></label>
+	<div class="historyBt" onClick="f_sort2()">絞込み検索</div>
+	</div>
+</form>
+
+<div id="history">
+<div class="s-hr"></div>
+<p class="st1 t-shadow-w">検索履歴</p>
+<button class="historyBt">ブーツ</button><button class="historyBt">財布</button><button class="historyBt">春物レインコート</button><button class="historyBt">ヴィヴィアンウエストウッド</button><button class="historyBt">パープルブーツ</button>
+<div class="txtBt">さらに表示</div>
+</div>
+
+</section>
+	<section id="scene2">
+	<div id="sortBts"><button class="btOn" onClick="f_sort(0)">オススメ順</button><button onClick="f_sort(1)">クチコミ順</button><button onClick="f_sort(2)">価格が安い</button><button onClick="f_sort(3)">OFF率が高い</button></div>
+		<div id="main"></div>
+	</section>
+</article>
+<div id=err></div>
+<script>
+
+var v_load="search.php?v_op=";
+//var v_load="http://www.netprice.co.jp/test/10399/search/search.php?v_op=";
+var v_key="";
+var v_op="&np=1";
+var a_goods=new Array();
+var v_total=0;
+
+function f_search(){
+	v_key = encodeURI(document.getElementById("searchTxt").value);
+	$('#searchTxt').blur();
+	f_loadXML();
+}
+
+var t_input = null;
+var input = document.getElementById("searchTxt");
+input.addEventListener("focus", function(){
+	window.clearInterval(t_input);
+	t_input = window.setInterval(function(){
+		if(document.getElementById("searchTxt").value){
+		$("#close1").css("fill","#999");
+		}else{
+			$("#close1").css("fill","#CCC");
+		}
+    }, 10);
+}, false);
+input.addEventListener("blur", function(){
+	window.clearInterval(t_input);
+}, false);
+function f_reset(){
+	document.getElementById("searchTxt").value="";
+	$("#close1").css("fill","#CCC");
+	window.clearInterval(t_input);
+}
+function f_addTerm(){
+	document.getElementById('terms').style.display="inline-block";
+	document.getElementById('history').style.display="inline-block";
+}
+function f_sort2(){
+	var a_goods2=new Array();
+	var a_goods0=a_goods;
+	var v_price1=parseInt($("select[name='price1']").val());
+	var v_price2=parseInt($("select[name='price2']").val());
+	a_goods.sort(function(a,b){return(a[3] - b[3]);});
+	for(i = 0; i < v_total; i++) {
+		if(a_goods[i][3]>=v_price1 && a_goods[i][3]<=v_price2){
+			a_goods2.push(a_goods[i]);
+		}
+	}
+	a_goods=a_goods2;
+	f_set();
+$(".goods").hide();
+	for(i=0 ; i<8 ; i++){
+		if(document.form1.checkbox[i].checked){
+			var v_s=document.form1.checkbox[i].value;
+			$("."+v_s).show();
+		}
+	}
+	a_goods=a_goods0;
+//	f_log(v_price1+"/"+v_price2);
+}
+
+function f_loadXML(){
+	document.getElementById('main').innerHTML ="";
+	document.getElementById('history').style.display="none";
+	document.getElementById('scene2').style.display="inline-block";
+	document.getElementById('add_term').style.display="inline-block";
+	$("#searchTxt").css({
+		"height":"40",
+		"font-size":"80%",
+		"width":"50%"
+	});
+	$(".st2").css({
+		"box-sizing":"border-box",
+		"-moz-box-sizing":"border-box",
+		"-webkit-box-sizing":"border-box",
+		"height":"40",
+		"width":"40",
+		"padding":"6"
+	});
+
+
+	var v_getURL=v_load+v_key+v_op;
+	var v_i=0;
+//	f_log(v_getURL);
+	var req = new XMLHttpRequest();
+	req.open('GET', v_getURL, false);
+	req.send(null);
+	xmlObj = req.responseXML;
+	xmlObj = xmlObj.getElementsByTagName('results')[0];
+	v_total = xmlObj.getElementsByTagName('result').length;
+	a_goods=new Array(v_total);
+	for(i = 0; i < v_total; i++) {
+		try {
+			a_goods[v_i]=new Array();
+			a_goods[v_i][0]=xmlObj.getElementsByTagName('result')[i].getElementsByTagName('id')[0].childNodes[0].nodeValue;
+			a_goods[v_i][1]=xmlObj.getElementsByTagName('result')[i].getElementsByTagName('product_id')[0].childNodes[0].nodeValue;
+			a_goods[v_i][2]=xmlObj.getElementsByTagName('result')[i].getElementsByTagName('title')[0].childNodes[0].nodeValue;
+			a_goods[v_i][3]=xmlObj.getElementsByTagName('result')[i].getElementsByTagName('price')[0].childNodes[0].nodeValue;
+			a_goods[v_i][4]=xmlObj.getElementsByTagName('result')[i].getElementsByTagName('url')[0].childNodes[0].nodeValue;
+			a_goods[v_i][5]=xmlObj.getElementsByTagName('result')[i].getElementsByTagName('comment_num')[0].childNodes[0].nodeValue;
+			a_goods[v_i][6]=xmlObj.getElementsByTagName('result')[i].getElementsByTagName('star_count')[0].childNodes[0].nodeValue;
+			a_goods[v_i][7]=xmlObj.getElementsByTagName('result')[i].getElementsByTagName('star_average')[0].childNodes[0].nodeValue;
+			a_goods[v_i][8]=xmlObj.getElementsByTagName('result')[i].getElementsByTagName('off_percent')[0].childNodes[0].nodeValue;
+			a_goods[v_i][9]=xmlObj.getElementsByTagName('result')[i].getElementsByTagName('num_of_selling')[0].childNodes[0].nodeValue;
+			a_goods[v_i][10]=xmlObj.getElementsByTagName('result')[i].getElementsByTagName('sticker_price')[0].childNodes[0].nodeValue;
+			a_goods[v_i][11]=xmlObj.getElementsByTagName('result')[i].getElementsByTagName('parent_genre')[0].childNodes[0].nodeValue;
+			a_goods[v_i][20]=v_i;
+			v_i++;
+		}catch(e){}
+//		f_log(a_goods[i][8]);
+	}
+	v_total = v_i;
+	f_set();
+}
+function f_set(){
+//f_log(a_goods.length)
+	var v_html='';
+	for(i = 0; i < v_total; i++) {
+try {
+		var v_off="";
+		if(a_goods[i][8]>0){
+			v_off='<svg class="down_icon" viewBox="-10 -10 110 110"><use xlink:href="#down" fill="#FEC" stroke="#FEC" stroke-width="5"/></svg><span class=off>'+a_goods[i][8]+'</span>';
+		}
+		var v_star="";
+		if(a_goods[i][7]>0){
+			v_star='<svg class="star_icon" viewBox="5 5 140 140"><use xlink:href="#favorit" fill="#FEC" stroke="#FEC" stroke-width="5"/></svg><span class=star>'+a_goods[i][7]+'</span>';
+		}
+		v_html+="<a href=http://www.netprice.co.jp/netprice/appnp/goods/"+a_goods[i][0]+"/ class='goods "+a_goods[i][11]+"'><img src="+a_goods[i][4]+"?_ex=200><span class=name>"+a_goods[i][2]+"</span>"+v_star+v_off+"<span class=price>&yen;"+a_goods[i][3]+"</span></a>";
+}catch(e){}
+
+	}
+	document.getElementById('main').innerHTML =v_html;
+}
+function f_sort(v_n){
+	$("#sortBts button").removeClass("btOn");
+	$("#sortBts button:eq("+v_n+")").addClass("btOn");
+	switch (v_n){
+		case 1:
+		a_goods.sort(function(a, b) {return (b[7] - a[7]);});
+		f_set();
+		break;
+		case 2:
+		a_goods.sort(function(a,b){return(a[3] - b[3]);});
+		f_set();
+		break;
+		case 3:
+		a_goods.sort(function(a, b) {return (b[8] - a[8]);});
+		f_set();
+		break;
+		default:
+		a_goods.sort(function(a, b) {return (a[20] - b[20]);});
+		f_set();
+		break;
+	}
+}
+$('#searchTxt').focus();
+
+function f_key(code){
+	if(13 === code){
+		f_search();
+	}
+}
+
+
+
+
+
+function f_log(v_t){
+	document.getElementById('err').innerHTML = String(v_t)+"<br>"+document.getElementById('err').innerHTML;
+}
+
+</script>
+</body>
+</html>
