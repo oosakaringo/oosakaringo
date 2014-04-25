@@ -428,7 +428,7 @@ input[type="checkbox"]:checked:after {
 	<section id="scene1">
 <form name="form1" onsubmit="f_search();return false;">
 		<div class="st2"><svg id="search_icon" class="" viewBox="-10 -10 120 120">
-		<use xlink:href="#search" fill="none" stroke="#FFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"/></svg></div><input type="search" id="searchTxt" value="" placeholder="検索" onKeyPress="f_key(event.keyCode);"><div class="st2" onClick="f_reset();"><svg viewBox="-5 -5 120 120">
+		<use xlink:href="#search" fill="none" stroke="#FFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"/></svg></div><input type="search" id="searchTxt" value="" placeholder="検索" onKeyPress="f_key(event.keyCode);"><div class="st2" onClick="f_resetWord();"><svg viewBox="-5 -5 120 120">
 		<use id="close1" xlink:href="#close" fill="#CCC" stroke="#CCC" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/></svg></div><div id="add_term" onClick="f_addTerm();"><svg viewBox="-50 -75 200 200">
 		<use id="more" xlink:href="#more" fill="none" stroke="#FFF" stroke-width="13" stroke-linecap="butt" /></svg></div>
 		<div id="terms">
@@ -462,7 +462,7 @@ input[type="checkbox"]:checked:after {
 	</select>
 	<span class="st4 st1 t-shadow-w">カテゴリを選ぶ</span>
 	<label>レディースファッション<br><input type="checkbox" name="checkbox" value="01"></label><label>ブランド<br><input type="checkbox" name="checkbox" value="02"></label><label>ダイエット＆健康<br><input type="checkbox" name="checkbox" value="03"></label><label>美容＆コスメ<br><input type="checkbox" name="checkbox" value="04"></label><label>生活雑貨＆家電<br><input type="checkbox" name="checkbox" value="05"></label><label>フード＆ドリンク<br><input type="checkbox" name="checkbox" value="06"></label><label>メンズ<br><input type="checkbox" name="checkbox" value="07"></label><label>24バリュー<br><input type="checkbox" name="checkbox" value="0"></label>
-	<div class="historyBt" onClick="f_sort2()">絞込み検索</div>
+	<div class="historyBt" onClick="f_sort2(0)">絞込み検索</div>
 	</div>
 </form>
 
@@ -475,7 +475,7 @@ input[type="checkbox"]:checked:after {
 
 </section>
 	<section id="scene2">
-	<div id="sortBts"><button class="btOn" onClick="f_sort(0)">オススメ順</button><button onClick="f_sort(1)">クチコミ順</button><button onClick="f_sort(2)">価格が安い</button><button onClick="f_sort(3)">OFF率が高い</button></div>
+	<div id="sortBts"><button class="btOn" onClick="f_sort2(0)">オススメ順</button><button onClick="f_sort2(1)">クチコミ順</button><button onClick="f_sort2(2)">価格が安い</button><button onClick="f_sort2(3)">OFF率が高い</button></div>
 		<div id="main"></div>
 	</section>
 </article>
@@ -488,11 +488,23 @@ var v_key="";
 var v_op="&np=1";
 var a_goods=new Array();
 var v_total=0;
+var v_sortNo=2;
 
 function f_search(){
 	v_key = encodeURI(document.getElementById("searchTxt").value);
 	$('#searchTxt').blur();
+	f_reset();
 	f_loadXML();
+}
+
+function f_reset(){
+	for(i=0 ; i<8 ; i++){
+		if(document.form1.checkbox[i].checked){
+			document.form1.checkbox[i].checked=false;
+		}
+	}
+	$("select[name='price1']").val(0);
+	$("select[name='price2']").val(10000000);
 }
 
 var t_input = null;
@@ -510,7 +522,7 @@ input.addEventListener("focus", function(){
 input.addEventListener("blur", function(){
 	window.clearInterval(t_input);
 }, false);
-function f_reset(){
+function f_resetWord(){
 	document.getElementById("searchTxt").value="";
 	$("#close1").css("fill","#CCC");
 	window.clearInterval(t_input);
@@ -526,12 +538,13 @@ function f_addTerm(){
 		$("#add_term").css("transform","rotate(-180deg)");
 	}
 }
-function f_sort2(){
+function f_sort2(v_n){
 	var a_goods2=new Array();
 	var a_goods0=a_goods;
 	var v_price1=parseInt($("select[name='price1']").val());
 	var v_price2=parseInt($("select[name='price2']").val());
-	a_goods.sort(function(a,b){return(a[3] - b[3]);});
+//	a_goods.sort(function(a,b){return(a[3] - b[3]);});
+	f_sort(v_n);
 	for(i = 0; i < v_total; i++) {
 		if(a_goods[i][3]>=v_price1 && a_goods[i][3]<=v_price2){
 			a_goods2.push(a_goods[i]);
@@ -624,6 +637,10 @@ try {
 
 	}
 	document.getElementById('main').innerHTML =v_html;
+	if(document.getElementById('terms').style.display=="inline-block"){
+		document.getElementById('history').style.display="none";
+		$(window).scrollTop(500);
+	}
 }
 function f_sort(v_n){
 	$("#sortBts button").removeClass("btOn");
@@ -631,19 +648,19 @@ function f_sort(v_n){
 	switch (v_n){
 		case 1:
 		a_goods.sort(function(a, b) {return (b[7] - a[7]);});
-		f_set();
+//		f_set();
 		break;
 		case 2:
 		a_goods.sort(function(a,b){return(a[3] - b[3]);});
-		f_set();
+//		f_set();
 		break;
 		case 3:
 		a_goods.sort(function(a, b) {return (b[8] - a[8]);});
-		f_set();
+//		f_set();
 		break;
 		default:
 		a_goods.sort(function(a, b) {return (a[20] - b[20]);});
-		f_set();
+//		f_set();
 		break;
 	}
 }
