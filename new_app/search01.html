@@ -539,12 +539,17 @@ function f_sort2(){
 	}
 	a_goods=a_goods2;
 	f_set();
-$(".goods").hide();
+	$(".goods").hide();
+	var v_hhh=0;
 	for(i=0 ; i<8 ; i++){
 		if(document.form1.checkbox[i].checked){
+			v_hhh++;
 			var v_s=document.form1.checkbox[i].value;
 			$("."+v_s).show();
 		}
+	}
+	if(v_hhh==0){
+		$(".goods").show();
 	}
 	a_goods=a_goods0;
 //	f_log(v_price1+"/"+v_price2);
