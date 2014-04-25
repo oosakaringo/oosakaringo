@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 13.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 14948)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" [
+	<!ENTITY st0 "fill-rule:evenodd;clip-rule:evenodd;fill:#EFDB7C;">
+	<!ENTITY st1 "fill-rule:evenodd;clip-rule:evenodd;fill:#FFFFFF;">
+	<!ENTITY st2 "fill-rule:evenodd;clip-rule:evenodd;fill:#CC9900;">
+]>
+<svg version="1.1" id="レイヤー_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" width="150px" height="150px" viewBox="0 0 150 150" style="enable-background:new 0 0 150 150;" xml:space="preserve">
+<circle style="&st1;" cx="75" cy="75" r="75"/>
+<polygon style="&st0;" points="75,13.3 93.5,50.5 134.9,56.4 105,85.4 112,126.2 75,106.9 38.1,126.2 45.1,85.4 15.2,56.4 
+	56.5,50.5 "/>
+<polygon style="&st2;" points="93.5,50.5 75,13.3 75,75.8 "/>
+<polygon style="&st2;" points="105.1,85.4 135.1,56.5 75,75.8 "/>
+<polygon style="&st2;" points="75,107 112,126.3 75,75.8 "/>
+<polygon style="&st2;" points="45,85.5 37.9,126.3 75,75.8 "/>
+<polygon style="&st2;" points="56.4,50.5 15.1,56.5 75,75.8 "/>
+</svg>

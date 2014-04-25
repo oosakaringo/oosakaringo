@@ -1,0 +1,305 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name='viewport' content='width=320, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0'>
+<title>list</title>
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js'></script>
+<script>(function(e,t,n){function l(e,t){return this instanceof l?this.init(e,t):new l(e,t)}function c(e,t){return o.touch?e.changedTouches[0][t]:e[t]}function h(e){return m(e,function(e){return r.style[e]!==n})}function p(e,t,r){var o=s[t];o?e[o]=r:e[t]!==n?(s[t]=t,e[t]=r):m(i,function(i){var o=v(i)+v(t);if(e[o]!==n)return s[t]=o,e[o]=r,!0})}function d(e){if(r.style[e]!==n)return e;var t;return m(i,function(i){var s=v(i)+v(e);if(r.style[s]!==n)return t="-"+i+"-"+e,!0}),t}function v(e){return e.charAt(0).toUpperCase()+e.substr(1)}function m(e,t){for(var n=0,r=e.length;n<r;n++)if(t(e[n],n))return!0;return!1}function g(e,n,r,i){var s=t.createEvent("Event");s.initEvent(n,r,i),e.dispatchEvent(s)}var r=t.createElement("div"),i=["webkit","moz","o","ms"],s={},o={};o.transform3d=h(["perspectiveProperty","WebkitPerspective","MozPerspective","OPerspective","msPerspective"]),o.transform=h(["transformProperty","WebkitTransform","MozTransform","OTransform","msTransform"]),o.transition=h(["transitionProperty","WebkitTransitionProperty","MozTransitionProperty","OTransitionProperty","msTransitionProperty"]),o.touch="ontouchstart"in e,o.cssAnimation=(o.transform3d||o.transform)&&o.transition;var u=o.touch?"touchstart":"mousedown",a=o.touch?"touchmove":"mousemove",f=o.touch?"touchend":"mouseup";l.prototype.init=function(e,r){var i=this;i.element=e,typeof e=="string"&&(i.element=t.querySelector(e));if(!i.element)throw new Error("element not found");return r=r||{},i.distance=r.distance===n?null:r.distance,i.maxPoint=r.maxPoint===n?null:r.maxPoint,i.disableTouch=r.disableTouch===n?!1:r.disableTouch,i.disable3d=r.disable3d===n?!1:r.disable3d,i.currentPoint=0,i.currentX=0,i.animation=!1,i.use3d=o.transform3d,i.disable3d===!0&&(i.use3d=!1),o.cssAnimation?i._setStyle({transitionProperty:d("transform"),transitionTimingFunction:"cubic-bezier(0,0,0.25,1)",transitionDuration:"0ms",transform:i._getTranslate(0)}):i._setStyle({position:"relative",left:"0px"}),i.refresh(),i.element.addEventListener(u,i,!1),i.element.addEventListener(a,i,!1),i.element.addEventListener(f,i,!1),i},l.prototype.handleEvent=function(e){var t=this;switch(e.type){case u:t._touchStart(e);break;case a:t._touchMove(e);break;case f:t._touchEnd(e);break;case"click":t._click(e)}},l.prototype.refresh=function(){var e=this;e._maxPoint=e.maxPoint||function(){var t=e.element.childNodes,n=0,r=0,i=t.length,s;for(;r<i;r++)s=t[r],s.nodeType===1&&n++;return n>0&&n--,n}(),e._distance=e.distance||e.element.scrollWidth/(e._maxPoint+1),e._maxX=-e._distance*e._maxPoint,e.moveToPoint()},l.prototype.hasNext=function(){var e=this;return e.currentPoint<e._maxPoint},l.prototype.hasPrev=function(){var e=this;return e.currentPoint>0},l.prototype.toNext=function(){var e=this;if(!e.hasNext())return;e.moveToPoint(e.currentPoint+1)},l.prototype.toPrev=function(){var e=this;if(!e.hasPrev())return;e.moveToPoint(e.currentPoint-1)},l.prototype.moveToPoint=function(e){var t=this,r=t.currentPoint;e===n&&(e=t.currentPoint),e<0?t.currentPoint=0:e>t._maxPoint?t.currentPoint=t._maxPoint:t.currentPoint=parseInt(e,10),o.cssAnimation?t._setStyle({transitionDuration:"350ms"}):t.animation=!0,t._setX(-t.currentPoint*t._distance),r!==t.currentPoint&&g(t.element,"fsmoveend",!0,!1)},l.prototype._setX=function(e){var t=this;t.currentX=e,o.cssAnimation?t.element.style[s.transform]=t._getTranslate(e):t.animation?t._animate(e):t.element.style.left=e+"px"},l.prototype._touchStart=function(e){var t=this;if(t.disableTouch)return;o.cssAnimation?t._setStyle({transitionDuration:"0ms"}):t.animation=!1,t.scrolling=!0,t.moveReady=!1,t.startPageX=c(e,"pageX"),t.startPageY=c(e,"pageY"),t.basePageX=t.startPageX,t.directionX=0,t.startTime=e.timeStamp},l.prototype._touchMove=function(e){var t=this;if(!t.scrolling)return;var n=c(e,"pageX"),r=c(e,"pageY"),i,s,o,u;if(t.moveReady){e.preventDefault(),e.stopPropagation(),i=n-t.basePageX,s=t.currentX+i;if(s>=0||s<t._maxX)s=Math.round(t.currentX+i/3);t._setX(s),t.directionX=i===0?t.directionX:i>0?-1:1}else o=Math.abs(n-t.startPageX),u=Math.abs(r-t.startPageY),o>5?(e.preventDefault(),e.stopPropagation(),t.moveReady=!0,t.element.addEventListener("click",t,!0)):u>5&&(t.scrolling=!1);t.basePageX=n},l.prototype._touchEnd=function(e){var t=this;if(!t.scrolling)return;t.scrolling=!1;var n=-t.currentX/t._distance;n=t.directionX>0?Math.ceil(n):t.directionX<0?Math.floor(n):Math.round(n),t.moveToPoint(n),setTimeout(function(){t.element.removeEventListener("click",t,!0)},200)},l.prototype._click=function(e){var t=this;e.stopPropagation(),e.preventDefault()},l.prototype._setStyle=function(e){var t=this,n=t.element.style;for(var r in e)p(n,r,e[r])},l.prototype._animate=function(e){var t=this,n=t.element,r=+(new Date),i=parseInt(n.style.left,10),s=e,o=350,u=function(e,t){return-(e/=t)*(e-2)},a=setInterval(function(){var e=new Date-r,t,f;e>o?(clearInterval(a),f=s):(t=u(e,o),f=t*(s-i)+i),n.style.left=f+"px"},10)},l.prototype.destroy=function(){var e=this;e.element.removeEventListener(u,e),e.element.removeEventListener(a,e),e.element.removeEventListener(f,e)},l.prototype._getTranslate=function(e){var t=this;return t.use3d?"translate3d("+e+"px, 0, 0)":"translate("+e+"px, 0)"},e.Flipsnap=l})(window,window.document);</script>
+<style type="text/css">
+body {
+	margin: 0px;
+	color: #333;
+	font-size: 16px;
+	line-height: 1.4em;
+	font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+	text-align: center;
+	background-color: #CCC;
+}
+a {
+	text-decoration: none;
+	color: #333;
+}
+.b-shadow {
+	box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+	-moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+	-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+}
+.radius3 {
+	border-radius: 0.3em;
+	-moz-border-radius: 0.3em;
+	-webkit-border-radius: 0.3em;
+}
+.radius5 {
+	border-radius: 0.5em;
+	-moz-border-radius: 0.5em;
+	-webkit-border-radius: 0.5em;
+}
+.t-shadow-b {
+	text-shadow:0px -1px 0px rgba(0,0,0,0.3);
+}
+.t-shadow-b2 {
+	text-shadow:0px 1px 0px rgba(0,0,0,0.3);
+}
+.t-shadow-w {
+	text-shadow:0px 1px 0px #FFF;
+}
+.i-block, section, .content1, .goods, .ss, .off, .price {
+	vertical-align: top;
+	display: inline-block;
+}
+.border-box, .navBT, section, .content1, .goods {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+#nav {
+	background-color: #3CC;
+	border-bottom-width: thin;
+	border-bottom-style: solid;
+	border-bottom-color: #CCC;
+}
+section {
+	margin: 0px;
+	overflow: hidden;
+	width: 100%;
+}
+.navBT {
+	height: 100px;
+	font-size: 14px;
+	line-height: 1em;
+	color: #FFF;
+	font-weight: bold;
+	padding-top: 5em;
+}
+#content {
+}
+.goods {
+	width: 50%;
+	border-top-width: thin;
+	border-right-width: thin;
+	border-bottom-width: thin;
+	border-left-width: thin;
+	border-top-style: solid;
+	border-top-color: #CCC;
+	border-right-color: #CCC;
+	border-bottom-color: #CCC;
+	border-left-color: #CCC;
+	border-left-style: solid;
+	border-right-style: solid;
+	padding-bottom: 0.5em;
+}
+.goods:nth-child(odd){
+	margin-right: -1px;
+	border-left-style: none;
+}
+.goods:nth-child(even){
+	border-right-style: none;	
+}
+.content1 {
+	background-color: #FFF;
+}
+.goods .name {
+	display: block;
+	text-align: left;
+	font-size: 14px;
+	line-height: 1em;
+	padding: 0.5em;
+}
+.off {
+	background-color: #390;
+	font-size: 10px;
+	line-height: 10px;
+	font-weight: bold;
+	color: #FFF;
+	margin-right: 0.5em;
+	margin-left: -0.5em;
+	padding-top: 4px;
+	padding-right: 2px;
+	padding-bottom: 4px;
+	padding-left: 2px;
+}
+.off:after {
+	content: "";
+	border-top-width: 5px;
+	border-bottom-width: 5px;
+	border-left-width: 5px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: transparent;
+	border-bottom-color: transparent;
+	border-left-color: #390;
+	display: inline-block;
+	margin-left: -5px;
+	position: relative;
+	margin-top: -5px;
+	left: 8px;
+	top: -4px;
+}
+.ss {
+	background-color: #F60;
+	font-size: 10px;
+	line-height: 10px;
+	font-weight: bold;
+	color: #FFF;
+	margin-right: 0.5em;
+	padding-top: 4px;
+	padding-right: 2px;
+	padding-bottom: 4px;
+	padding-left: 2px;
+	margin-left: -0.5em;
+}
+.ss:after {
+	content: "";
+	border-top-width: 4px;
+	border-bottom-width: 4px;
+	border-left-width: 4px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: transparent;
+	border-bottom-color: transparent;
+	border-left-color: #F60;
+	display: inline-block;
+	margin-left: -5px;
+	position: relative;
+	margin-top: -5px;
+	left: 6px;
+	top: -5px;
+}
+
+.price {
+	font-size: 18px;
+	font-weight: bold;
+	color: #390;
+	line-height: 30px;
+}
+.price:after {
+	content: "円";
+	font-size: 20px;
+}
+</style>
+</head>
+<body>
+<section id="nav">
+	<div id="nav1" class="flipsnap"></div>
+</section>
+<section id="main">
+	<div id="content" class="flipsnap"></div>
+</section>
+<div id="err"></div>
+<script>
+var a_nav=[["レディース",4001],["ブランド",5001],["ダイエット・健康",3001],["美容",2001],["雑貨・家電",7001],["グルメ",8001],["メンズ",1041],["新着",1001],["オリジナル",46391],["定期便",46278],["ギャザリング",50225],["有名人",11048],["ランキング",48307]];
+var v_navAll=a_nav.length;
+var v_navHtml=v_mainHtml="";
+var v_now=0;
+var h=1;
+var v_stW=$("#nav").width();
+var v_stW2=v_stW/2;
+var v_site=v_genre="netprice";
+var v_etc="";
+var a_flipsnap=new Array();
+
+document.getElementById('nav1').style.width=v_navAll*v_stW2+"px";
+document.getElementById('nav').style.paddingLeft=v_stW2/2+"px";
+document.getElementById('content').style.width=v_navAll*v_stW+"px";
+for(i = 0; i < v_navAll; i++) {
+	v_navHtml+="<div class='navBT i-block' onClick=f_f1("+i+")>"+a_nav[i][0]+"</div>";
+	v_mainHtml+="<div class='content1'></div>";
+}
+document.getElementById('nav1').innerHTML=v_navHtml;
+document.getElementById('content').innerHTML=v_mainHtml;
+$(".navBT").css("width",v_stW2+"px");
+$(".content1").css("width",v_stW+"px");
+function f_f1(){
+	a_flipsnap[0].moveToPoint(v_now);
+	a_flipsnap[1].moveToPoint(v_now);
+	f_log(a_nav[v_now][1]);
+	f_loadXML(a_nav[v_now][1]);
+}
+
+f_flip_set("nav", v_stW2);
+f_flip_set("main", v_stW);
+
+function f_flip_set(b1, b2, b3) {
+	var flipsnap = Flipsnap('#' + b1 + ' .flipsnap', {
+		distance: b2,
+		maxPoint: v_navAll-1
+	});
+	a_flipsnap.push(flipsnap);
+	flipsnap.element.addEventListener('touchmove' , function () {
+		h=0;
+		a1=$(this).css("transform").split(",");
+		v_w=$(this).width()-320;
+		var v_a=Number(a1[4]);
+		if((v_a>=0 || v_a<-(v_w))&&v_old!=1){
+			h=1;
+		}
+		if(v_old==1){
+			clearTimeout(timer);
+		}
+	});
+	flipsnap.element.addEventListener('fsmoveend', function () {
+		h=0;
+		v_now=flipsnap.currentPoint;
+		f_f1();
+		timer=setTimeout(function(){h=1;},600);
+	}, false);
+
+f_log(flipsnap);
+
+}
+
+function f_loadXML(v_list){
+	var v_html='';
+	var v_getURL='http://www.netprice.co.jp/flash/list_xml/?list='+v_list;
+//	var v_getURL='/flash/list_xml/?list='+v_list;
+	var req = new XMLHttpRequest();
+	req.open('GET', v_getURL, false);
+	req.send(null);
+	xmlObj = req.responseXML;
+	var v_total = xmlObj.getElementsByTagName('goods_id').length;
+//	var v_total = 15;
+	for(i = 0; i < v_total; i++) {
+		if(xmlObj.getElementsByTagName('pictures')[i].childNodes.length > 0) {
+			var v_goods_id = xmlObj.getElementsByTagName('goods_id')[i].childNodes[0].nodeValue;
+			var v_picture_url = xmlObj.getElementsByTagName('pictures')[i].childNodes[0].childNodes[0].nodeValue;
+			var v_goods_name = xmlObj.getElementsByTagName('goods_name')[i].childNodes[0].nodeValue;
+			var v_price_with_tax = xmlObj.getElementsByTagName('price_with_tax')[i].childNodes[0].nodeValue;
+			var v_sum_of_stock = xmlObj.getElementsByTagName('sum_of_stock')[i].childNodes[0].nodeValue;
+			var v_sale_off = xmlObj.getElementsByTagName('sale_off')[i].childNodes[0].nodeValue;
+			var v_kanbai = '';
+			var ss='';
+			if(v_sale_off > 30) {
+				v_sale_off = '<span class=off>' + v_sale_off + '%<br />OFF</span>';
+			} else {
+				v_sale_off = '';
+			}
+			if(v_sum_of_stock < 30 && v_sum_of_stock > 0) {
+				ss = '<span class=ss>完売<br>間近</span>';
+			} else if(v_sum_of_stock < 1) {
+				v_kanbai = '&_acmp=ca0+0+0+/ACMP/0/acmp_soldoutm+lrs100';
+			}
+			var v_url='/'+v_site+'/'+v_genre+'/?contents=goods&goods_id=' + v_goods_id + v_etc;
+			v_html+="<div class='goods' onClick=f_link('"+v_url+"')><img src=http://wm.netprice.co.jp/@0_img"+v_picture_url+".jpg?_ex=150x150" + v_kanbai+"><span class='name'>"+v_goods_name +"</span>"+ss+v_sale_off+"<span class=price>"+v_price_with_tax+"</span></div>";
+		}
+	}
+	$(".content1:eq("+v_now+")").html(v_html);
+//	document.getElementById('main').innerHTML=v_html;
+}
+function f_link(v_url) {
+	if(h){
+		top.location.href = v_url;
+	}else{
+		h=1;
+	}
+}
+function f_log(v_t){
+	document.getElementById('err').innerHTML += String(v_t)+"<br>";
+}
+f_f1(0);
+
+</script>
+</body>
+</html>

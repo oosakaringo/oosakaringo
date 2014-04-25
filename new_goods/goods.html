@@ -1,0 +1,901 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name='viewport' content='width=device-width,initial-scale=1,maximum-scale=1'>
+<meta charset="utf-8">
+<title>テストgoods</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<style type="text/css">
+body {
+	margin: 0px;
+	color: #333;
+	font-size: 16px;
+	line-height: 1.4em;
+	font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+	text-align: center;
+	width: 100%;
+	padding-top: 35px;
+	background-color: #FFFFFF;
+}
+a {
+	text-decoration: none;
+	color: #333;
+}
+.b-shadow {
+	box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+	-moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+	-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+}
+.b-shadow2 {
+	box-shadow: 0px -1px 3px rgba(0,0,0,0.3);
+	-moz-box-shadow: 0px -1px 3px rgba(0,0,0,0.3);
+	-webkit-box-shadow: 0px -1px 3px rgba(0,0,0,0.3);
+}
+.radius2 {
+	border-radius: 0.2em;
+	-moz-border-radius: 0.2em;
+	-webkit-border-radius: 0.2em;
+}
+.radius3, .share, .friends, .cart_in:before {
+	border-radius: 0.3em;
+	-moz-border-radius: 0.3em;
+	-webkit-border-radius: 0.3em;
+}
+.radius5 {
+	border-radius: 0.5em;
+	-moz-border-radius: 0.5em;
+	-webkit-border-radius: 0.5em;
+}
+.t-shadow-b {
+	text-shadow:0px -1px 0px rgba(0,0,0,0.3);
+}
+.t-shadow-b2 {
+	text-shadow:0px 1px 0px rgba(0,0,0,0.3);
+}
+.t-shadow-w {
+	text-shadow:0px 1px 0px #FFF;
+}
+.i-block, div {
+	vertical-align: top;
+	display: inline-block;
+}
+#goods_header {
+	width: 100%;
+	background-color: rgba(245,245,245,0.95);
+	position: fixed;
+	top: 0px;
+	height: 35px;
+	border-bottom-width: thin;
+	border-bottom-style: solid;
+	border-bottom-color: #DDD;
+	z-index: 5;
+	left: 0px;
+}
+#pankuzu {
+	line-height: 35px;
+	float: left;
+	padding-left: 0.5em;
+	color: #06C;
+	font-weight: bold;
+	font-size: 14px;
+}
+#heart {
+	line-height: 35px;
+	font-size: 20px;
+	color: #F99;
+	height: 35px;
+	width: 35px;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	display: inline-block;
+}
+.push {
+	font-size: 10px;
+	line-height: 1em;
+	font-weight: bold;
+	color: #FFF;
+	background-color: #F33;
+	position: absolute;
+	right: 46px;
+	border-radius: 100%;
+	-moz-border-radius: 100%;
+	-webkit-border-radius: 100%;
+	top: 3px;
+	padding: 0.4em;
+	min-width: 1em;
+}
+#carticon {
+	height: 35px;
+	width: 35px;
+	position: absolute;
+	right: 40px;
+	top: 0px;
+}
+h1 {
+	font-size: 14px;
+	line-height: 1.2em;
+	text-align: left;
+	margin: 0px;
+	padding: 0.5em;
+}
+#w0, #w1, #w2, #w3 {
+	width: 100%;
+	position: relative;
+	overflow: hidden;
+	
+}
+.move, #w0, #w1, #w2, #w3 {
+	transition: 0.5s ease;
+	-moz-transition: 0.5s ease;
+	-webkit-transition: 0.5s ease;
+}
+#w2, #w3 {
+	position: absolute;
+	top: 0px;
+	left: 100%;
+}
+
+#all {
+	font-size: 14px;
+	line-height: 1em;
+	font-weight: bold;
+	color: #FFF;
+	background-color: #F33;
+	padding: 0.5em;
+	float: left;
+	margin-left: 0.5em;
+}
+#all:before {
+	content: "累計販売個数 "
+}
+#all:after {
+	content: "個"
+}
+#star {
+	color: #F90;
+	font-weight: bold;
+	float: right;
+	margin-right: 0.5em;
+}
+#img_w {
+	width: 100%;
+	overflow: hidden;
+	text-align: left;
+	padding-top: 0.2em;
+	padding-bottom: 0.3em;
+}
+#img1 {
+	width: 1000%;
+	margin: 0px;
+}
+#img1 img {
+	margin: 0px;
+	float: left;
+	padding-right: 40px;
+	padding-left: 40px;
+	width: 10%;
+}
+.no-border, #img_w, #img1 img, select, .share, .friends, .goodsDescription, #spec, .listBT, .choiceBT, .st4, .bt3 {
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+#img1 {
+	animation: animate1 15s ease 1s infinite alternate;
+	-moz-animation: animate1 15s ease 1s infinite alternate;
+	-webkit-animation: animate1 15s ease 1s infinite alternate;
+	position: relative;
+	left: 0%;
+}
+@keyframes animate1 {
+ 0% {left: 0;}
+ 5% {left: 0;}
+ 10% {left: -100%;}
+ 15% {left: -100%;}
+ 20% {left: -200%;}
+ 25% {left: -200%;}
+ 30% {left: -300%;}
+ 35% {left: -300%;}
+ 40% {left: -400%;}
+ 45% {left: -400%;}
+ 50% {left: -500%;}
+ 55% {left: -500%;}
+ 60% {left: -600%;}
+ 65% {left: -600%;}
+ 70% {left: -700%;}
+ 75% {left: -700%;}
+ 80% {left: -800%;}
+ 85% {left: -800%;}
+ 90% {left: -900%;}
+ 100% {left: -900%;}
+}
+@-moz-keyframes animate1 {
+ 0% {left: 0;}
+ 5% {left: 0;}
+ 10% {left: -100%;}
+ 15% {left: -100%;}
+ 20% {left: -200%;}
+ 25% {left: -200%;}
+ 30% {left: -300%;}
+ 35% {left: -300%;}
+ 40% {left: -400%;}
+ 45% {left: -400%;}
+ 50% {left: -500%;}
+ 55% {left: -500%;}
+ 60% {left: -600%;}
+ 65% {left: -600%;}
+ 70% {left: -700%;}
+ 75% {left: -700%;}
+ 80% {left: -800%;}
+ 85% {left: -800%;}
+ 90% {left: -900%;}
+ 100% {left: -900%;}
+}
+@-webkit-keyframes animate1 {
+ 0% {left: 0;}
+ 5% {left: 0;}
+ 10% {left: -100%;}
+ 15% {left: -100%;}
+ 20% {left: -200%;}
+ 25% {left: -200%;}
+ 30% {left: -300%;}
+ 35% {left: -300%;}
+ 40% {left: -400%;}
+ 45% {left: -400%;}
+ 50% {left: -500%;}
+ 55% {left: -500%;}
+ 60% {left: -600%;}
+ 65% {left: -600%;}
+ 70% {left: -700%;}
+ 75% {left: -700%;}
+ 80% {left: -800%;}
+ 85% {left: -800%;}
+ 90% {left: -900%;}
+ 100% {left: -900%;}
+}
+.imgTitle {
+	width: 10%;
+	display: block;
+	float: left;
+	text-align: center;
+	font-size: 12px;
+	line-height: 1em;
+	color: #999;
+	padding-top: 0.2em;
+}
+#sticker_price, .sticker_price {
+	width: 30%;
+	text-align: left;
+	font-size: 12px;
+	padding-left: 0.5em;
+	line-height: 1.2em;
+	padding-top: 0.5ex;
+	font-weight: bold;
+}
+#off {
+	background-color: #F33;
+	font-size: 12px;
+	line-height: 1.2em;
+	font-weight: bold;
+	color: #FFF;
+	padding: 0.5em;
+}
+.price {
+	color: #F33;
+	font-size: 30px;
+	line-height: 1.4em;
+	font-weight: bold;
+	padding-left: 5px;
+}
+#off:after {
+	content:"";
+	border-top-width: 1em;
+	border-bottom-width: 1em;
+	border-left-width: 1em;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: transparent;
+	border-bottom-color: transparent;
+	border-left-color: #F33;
+	display: inline-block;
+	position: relative;
+	top: -1em;
+	left: 0.5em;
+	margin-top: -1em;
+	margin-right: -1em;
+	margin-bottom: -1em;
+}
+.select_bt {
+	font-weight: bold;
+	width: 90%;
+	font-size: 14px;
+	line-height: 1em;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	background-color: #DDD;
+}
+.select_bt:after {
+	content: ">";
+	margin-left: -2em;
+	float: right;
+	padding-right: 1em;
+	color: #666;
+	font-weight: bold;
+	vertical-align: middle;
+}
+.cart, .bt1, .bt2 {
+	color: #FFF;
+	background-color: #6C0;
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 1em;
+}
+.cart{
+	width: 60%;
+	padding-top: 0.4em;
+	padding-bottom: 0.4em;
+}
+.cart_in:before {
+	content: "カートに入れる";
+	display: inline-block;
+	position: relative;
+	font-size: 10px;
+	line-height: 1em;
+	padding: 1em;
+	float: right;
+	background-color: #6C0;
+	color: #FFF;
+	margin-left: -8em;
+	top: 4.5em;
+}
+.bt1, .bt2 {
+	width: 80%;
+	padding-top: 1em;
+	padding-bottom: 1em;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+#moveTop {
+	display: none;
+	position: fixed;
+	right: 5px;
+	z-index: 5;
+	bottom: 60px;
+}
+.icon {
+	display: block;
+	height: 70px;
+	width: 50px;
+}
+.bt2{
+	background-color: #8D3;
+}
+.bt3 {
+	width: 100%;
+	font-weight: bold;
+	font-size: 12px;
+	line-height: 1em;
+	padding-top: 1.5em;
+	padding-bottom: 1.5em;
+	background-color: #EEE;
+	margin-bottom: 1em;
+	border-bottom-width: thin;
+	border-bottom-style: solid;
+	border-bottom-color: #DDD;
+	border-top-width: thin;
+	border-top-style: solid;
+	border-top-color: #FFF;
+	color: #6C0;
+}
+select {
+	font-size: 160%;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	background: #dddddd;
+	background: -moz-linear-gradient(top,  #dddddd 0%, #dddddd 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dddddd), color-stop(100%,#dddddd));
+	background: -webkit-linear-gradient(top,  #dddddd 0%,#dddddd 100%);
+	background: -o-linear-gradient(top,  #dddddd 0%,#dddddd 100%);
+	background: -ms-linear-gradient(top,  #dddddd 0%,#dddddd 100%);
+	background: linear-gradient(to bottom,  #dddddd 0%,#dddddd 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dddddd', endColorstr='#dddddd',GradientType=0 );
+	background-color: #DDD;
+	line-height: 1.8em;
+}
+.share, .friends {
+	width: 47%;
+	border: thin solid #CCC;
+	padding: 0.5em;
+	margin-top: 0.5em;
+}
+.friends {
+	font-size: 12px;
+	line-height: 1.2em;
+	text-align: left;
+}
+.description, .goodsDescription, #spec {
+	text-align: left;
+	width: 100%;
+	overflow: hidden;
+	padding: 0.5em;
+}
+.goodsDescription h2 {
+	font-size: 18px;
+	line-height: 1.2em;
+	margin-top: 0em;
+	margin-right: 0px;
+	margin-bottom: 0.2em;
+	margin-left: 0px;
+	color: #06C;
+	clear: both;
+	padding-top: 1em;
+}
+.listBT {
+	width: 100%;
+	text-align: left;
+	font-weight: bold;
+	padding-top: 1.5em;
+	padding-left: 0.1em;
+	padding-bottom: 0.1em;
+	font-size: 20px;
+	line-height: 1em;
+}
+.border-b {
+	border-bottom-width: thin;
+	border-bottom-style: solid;
+	border-bottom-color: #CCC;
+}
+.listBT:before {
+	content: "□";
+	color: #F93;
+	line-height: 1em;
+}
+#spec {
+	font-size: 14px;
+	line-height: 1.4em;
+}
+#payInfo ul {
+	list-style-type: none;
+	padding: 0px;
+	margin: 0px;
+	font-size: 12px;
+	line-height: 1.4em;
+	border-right-width: thin;
+	border-bottom-width: thin;
+	border-left-width: thin;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-right-color: #CCC;
+	border-bottom-color: #CCC;
+	border-left-color: #CCC;
+}
+#payInfo p {
+	margin: 0px;
+	padding: 0.5em;
+}
+#payInfo li {
+}
+#payInfo li p:first-of-type {
+	background-color: #FEB;
+	border-top-width: thin;
+	border-top-style: solid;
+	border-top-color: #CCC;
+	font-weight: bold;
+	font-size: 14px;
+	line-height: 1em;
+}
+#goodsFooter {
+	font-size: 10px;
+	color: #FFF;
+	background-color: #999;
+	padding: 0.5em;
+	width: 100%;
+}
+.choiceBT {
+	border-bottom-width: thin;
+	border-bottom-style: solid;
+	border-bottom-color: #CCC;
+	padding: 0.5em;
+	text-align: left;
+	width: 100%;
+}
+.choiceBT img {
+	width: 25%;
+	float: left;
+	padding-right: 0.5em;
+}
+.off {
+	background-color: #999;
+	color: #777;
+}
+#cartUnit {
+	position: fixed;
+	left: 0px;
+	bottom: 0px;
+	background-color: rgba(245,245,245,0.95);
+	width: 100%;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	z-index: 3;
+	border-top-width: thin;
+	border-top-style: solid;
+	border-top-color: #CCC;
+}
+
+.st1 {
+	font-size: 14px;
+	line-height: 1em;
+	display: block;
+	padding-bottom: 0.3em;
+}
+.st2 {
+	color: #F66;
+	display: block;
+	text-align: right;
+}
+.st3 {
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+.st4{
+	padding: 0.5em;
+	width: 100%;
+	text-align: left;
+}
+</style>
+</head>
+
+<body>
+<div id="w0">
+	<div id="w1">
+		<div id="goods_header" class="move"><a href="#" id="pankuzu" onClick="f_back()">&lt;ファッション</a><a href="#" id="cart">
+		<svg version="1.1" id="carticon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" viewBox="-3 -3 100 70" xml:space="preserve">
+<polygon fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke="#06C" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" points="
+	16,18 88,18 83,55 26,55 "/>
+<circle fill-rule="evenodd" fill="#06C" clip-rule="evenodd" cx="37.5" cy="62.5" r="6"/>
+<circle fill-rule="evenodd" fill="#06C" clip-rule="evenodd" cx="72.5" cy="62.5" r="6"/>
+<line fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke="#06C" stroke-linecap="round" stroke-width="3" stroke-linejoin="round" x1="3" y1="3" x2="16" y2="18"/>
+<circle fill-rule="evenodd" fill="#06C" clip-rule="evenodd" cx="2.5" cy="2.5" r="4"/>
+</svg>
+		<span class="push">5</span>
+		</a><a href="#" id="heart">&#9829;</a></div>
+		<div id="cartUnit" class="move">
+		
+		<select name="">
+			<option selected>1個</option>
+			<option>2個</option>
+			<option>3個</option>
+			<option>4個</option>
+			<option>5個</option>
+			<option>6個</option>
+			<option>7個</option>
+			<option>8個</option>
+			<option>9個</option>
+			<option>10個</option>
+		</select>
+		<div class="cart radius3" onClick="f_f1()"><span class="st1">色･サイズ･型を選んで</span>カートに入れる</div>
+		</div>
+		<div id="moveTop" onClick="f_top()">		
+		<svg version="1.1" id="icon1" class="icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-10 -10 120 120">
+<filter id="drop-shadow" x="-1" y="-1" width="300%" height="300%">
+	<feGaussianBlur in="SourceAlpha" stdDeviation="5"/>
+	<feOffset dx="0" dy="1" result="offsetblur"/>
+	<feComponentTransfer>
+		<feFuncA type="table" tableValues="0 0.3"/>
+	</feComponentTransfer>
+	<!--feFlood flood-color="#999"/>
+	<feComposite in2="offsetblur" operator="in"/-->
+	<feMerge>
+		<feMergeNode/>
+		<feMergeNode in="SourceGraphic"/>
+	</feMerge>
+</filter> 
+<filter id="shadow_b" x="-1" y="-1" width="300%" height="300%">
+	<feGaussianBlur in="SourceAlpha" stdDeviation="5" result="blur"/>
+	<feOffset in="blur" dx="0" dy="3" result="offsetBlur"/>
+	<feFlood flood-color="red"/>
+	<feFuncA in="offsetBlur1" result="offsetBlur" type="table" tableValues="0 0.1"/>
+	<feMerge>
+		<feMergeNode in="offsetBlur"/>
+		<!--feMergeNode in="SourceGraphic"/-->
+	</feMerge>
+</filter>
+<!--path fill-rule="evenodd" clip-rule="evenodd" fill="#EEE" filter="url(#drop-shadow)" d="M36,57.6c7.95,0,14.4,6.45,14.4,14.4S43.95,86.4,36,86.4
+	S21.6,79.95,21.6,72S28.05,57.6,36,57.6z M26,37.4C10.98,41.74,0,55.59,0,72c0,19.88,16.12,36,36,36s36-16.12,36-36
+	c0-16.41-10.98-30.26-26-34.6V25.36h10L36,0L16,25.36h10V37.4z"/-->
+	
+	<path fill-rule="evenodd" clip-rule="evenodd" fill="#EEE" filter="url(#drop-shadow)" d="M0,50c0,27.61,22.39,50,50,50s50-22.39,50-50S77.61,0,50,0
+	S0,22.39,0,50z M59.5,32c0-2.49,2.01-4.5,4.5-4.5s4.5,2.01,4.5,4.5s-2.01,4.5-4.5,4.5S59.5,34.49,59.5,32z M59.5,46
+	c0-2.49,2.01-4.5,4.5-4.5s4.5,2.01,4.5,4.5s-2.01,4.5-4.5,4.5S59.5,48.49,59.5,46z M59.5,60c0-2.49,2.01-4.5,4.5-4.5
+	s4.5,2.01,4.5,4.5s-2.01,4.5-4.5,4.5S59.5,62.49,59.5,60z M73.5,46c0-2.49,2.01-4.5,4.5-4.5s4.5,2.01,4.5,4.5s-2.01,4.5-4.5,4.5
+	S73.5,48.49,73.5,46z M73.5,60c0-2.49,2.01-4.5,4.5-4.5s4.5,2.01,4.5,4.5s-2.01,4.5-4.5,4.5S73.5,62.49,73.5,60z M73.5,74
+	c0-2.49,2.01-4.5,4.5-4.5s4.5,2.01,4.5,4.5s-2.01,4.5-4.5,4.5S73.5,76.49,73.5,74z M31.5,32c0-2.49,2.01-4.5,4.5-4.5
+	s4.5,2.01,4.5,4.5s-2.01,4.5-4.5,4.5S31.5,34.49,31.5,32z M31.5,46c0-2.49,2.01-4.5,4.5-4.5s4.5,2.01,4.5,4.5s-2.01,4.5-4.5,4.5
+	S31.5,48.49,31.5,46z M31.5,60c0-2.49,2.01-4.5,4.5-4.5s4.5,2.01,4.5,4.5s-2.01,4.5-4.5,4.5S31.5,62.49,31.5,60z M17.5,46
+	c0-2.49,2.01-4.5,4.5-4.5s4.5,2.01,4.5,4.5s-2.01,4.5-4.5,4.5S17.5,48.49,17.5,46z M17.5,60c0-2.49,2.01-4.5,4.5-4.5
+	s4.5,2.01,4.5,4.5s-2.01,4.5-4.5,4.5S17.5,62.49,17.5,60z M17.5,74c0-2.49,2.01-4.5,4.5-4.5s4.5,2.01,4.5,4.5s-2.01,4.5-4.5,4.5
+	S17.5,76.49,17.5,74z M45.5,18c0-2.49,2.01-4.5,4.5-4.5s4.5,2.01,4.5,4.5s-2.01,4.5-4.5,4.5S45.5,20.49,45.5,18z M45.5,32
+	c0-2.49,2.01-4.5,4.5-4.5s4.5,2.01,4.5,4.5s-2.01,4.5-4.5,4.5S45.5,34.49,45.5,32z M45.5,46c0-2.49,2.01-4.5,4.5-4.5
+	s4.5,2.01,4.5,4.5s-2.01,4.5-4.5,4.5S45.5,48.49,45.5,46z"/>
+	
+	
+</svg>
+		</div>
+		<h1>バイヤーイチ押し！最高級の肌触り。コットンカシミヤガーゼストール </h1>
+		<div id="all">1</div>
+		<div id="star">★★★★☆3.8点</div>
+		<div id="img_w">
+			<div id="img1"> <img src="01.jpg" alt="メイン画像"><img src="02.jpg" alt="ライトグレー"><img src="03.jpg" alt="プルーグリーン"><img src="04.jpg" alt="オレンジ"><img src="05.jpg" alt="モデル／女性"><img src="06.jpg" alt="モデル／二重巻き"><img src="07.jpg" alt="モデル2／二重巻き"><img src="08.jpg"><img src="09.jpg" alt="フロントアップ"><img src="10.jpg" alt="生地アップ"><br>
+				<span class="imgTitle">メイン画像</span><span class="imgTitle">ライトグレー</span><span class="imgTitle">プルーグリーン</span><span class="imgTitle">オレンジ</span><span class="imgTitle">モデル／女性</span><span class="imgTitle">モデル／二重巻き</span><span class="imgTitle">モデル2／二重巻き</span><span class="imgTitle">モデル3／二重巻き</span><span class="imgTitle">フロントアップ</span> <span class="imgTitle">生地アップ</span> </div>
+		</div>
+		<div class="sticker_price">参考価格: 7,900円(税込)</div>
+		<div id="off">11%<br>
+			OFF</div>
+		<div class="price">7,900円</div>
+		
+		<div>
+			<div class="share">シェアする</div>
+			<div class="friends">友達を誘って5％OFF(7,505円)で買う</div>
+		</div>
+		<div id="goodsDes" class="goodsDescription move">
+			<h2 class="txtTitle01Blue">これ、今週の超イチ押しです！（by バイヤー）</h2>
+			<img align="right" class="txtMarginL npThumb" src="http://wm.netprice.co.jp/@0_img/goodsimg/R37681/m_10001.jpg?_ex=300x300" style="cursor: pointer;">3月になってだんだん暖かくなってきても、朝晩はまだ冷えますよね。それに昨日はポカポカ陽気だったのに、今日は冬に戻ったみたい…といった感じで、春の天気は移り気だから洋服選びが難しい季節なんです。こういう時期のマストアイテムといったら薄手のストール。そこで、おしゃれバイヤーが超イチ押しをご用意しました！肌触りの良さがポイントですよ。<br>
+			<h2 class="txtTitle01Blue">最高級の内モンゴル産50％！手触りが柔らかいコットンカシミヤのガーゼ織。</h2>
+			<img align="right" class="txtMarginL npThumb" src="http://wm.netprice.co.jp/@0_img/goodsimg/R37681/m_20003.jpg?_ex=300x300" style="cursor: pointer;">ガーゼ織なのでサラッとしています。私ライターもガーゼ織のストールは持っていますが、それとは手触りがまったく違う…なんでだろう？と思っていたら、実は高級素材カシミヤを50％も使っていたんです。カシミヤはもちろん最上級とされる内モンゴル産。だからとっても柔らかく、肌触りが良くて気持ちいい！<br>
+			<h2 class="txtTitle01Blue">これ1枚でオールシーズンOK！</h2>
+			縦70×横200cmの大判サイズなので、くるくる巻いたりふわっと羽織ったりとアレンジが自由自在♪ふんわり空気を包み込むように巻くと、あったかいから春先にぴったり。畳むとコンパクトになるので、夏場の冷房対策や日よけとして持ち歩くのにも便利ですよ。旅行にだって最適。これ1枚でオールシーズン活躍します。<br>
+			<img align="left" class="txtMarginL npThumb" src="http://wm.netprice.co.jp/@0_img/goodsimg/R37681/m_02.jpg?_ex=300x300" style="cursor: pointer;"><img align="left" class="txtMarginL npThumb" src="http://wm.netprice.co.jp/@0_img/goodsimg/R37681/m_20000.jpg?_ex=300x300" style="cursor: pointer;"><br>
+			<h2 class="txtTitle01Blue">有名通販と同じ商品だけど、ココならちょっとお得。男性にもオススメ！</h2>
+			これ、実はまだ某カタログ通販で販売されているアイテムと同じなんです。でもココなら千円近く安く手に入る！どれも色がキレイだからコーデの差し色になりますよ。男性でも使えるカラーも揃っています。2色買いして、組み合わせて巻くのも◎。薄手だからこそ重ね使いでおしゃれが楽しめます。首もとから春を取り入れて♪<br>
+			<img align="left" class="txtMarginL npThumb" src="http://wm.netprice.co.jp/@0_img/goodsimg/R37681/m_20004.jpg?_ex=300x300" style="cursor: pointer;"><img align="left" class="txtMarginL npThumb" src="http://wm.netprice.co.jp/@0_img/goodsimg/R37681/m_20001.jpg?_ex=300x300" style="cursor: pointer;"> </div><div class="bt3" onClick="f_open('goodsDes',0)">▼もっと見る▼</div>
+		
+	<div id="specBT" class="listBT">商品詳細</div>
+		<div id="spec" class="move"> ○商品名：コットンカシミヤガーゼストール<br>
+			○品番：4KZ13−380<br>
+			○カラー：<br>
+			ライトグレー<br>
+			ブルーグリーン<br>
+			オレンジ<br>
+			ネイビー<br>
+			※上記よりお好みのカラーをお選びください。<br>
+			○サイズ：<br>
+			※マフラー・ストールの場合<br>
+			《フリーサイズ》<br>
+			(約)縦70×横200cm<br>
+			○材質：<br>
+			カシミヤ50％<br>
+			コットン50％<br>
+			○生産国：中国<br>
+			○特記事項：<br>
+			参考価格には製造業者等が提示する価格を記載しております。<br>
+			撮影時の状況(光の加減等)や、お客様のご自身のパソコン・モニター等の使用環境などにより、実際の商品と比較して色味が若干異なって見える場合もございます。 </div>
+			
+			<div class="bt3" onClick="f_open('spec',1)">▼もっと見る▼</div>
+			
+			
+		<div id="payInfoTitle" class="listBT">決済・送料について</div>
+		<div id="payInfo" class="no-border description move">
+			<ul class="no-border">
+				<li>
+					<p class="st1">出荷予定日</p>
+					<p>2014年03月11日13:00までにご購入の場合、2014年03月14日出荷予定です。</p>
+				</li>
+				<li>
+					<p class="st1">同梱条件</p>
+					<p>他の商品とまとめて配送できます</p>
+				</li>
+				<li>
+					<p class="st1">送料</p>
+					<p>399円<br>
+						※ 合計5000円以上お買い上げで送料無料詳しくは<a class="defo" href="/help_guide/help_2/#help08">こちら</a> </p>
+				</li>
+				<li>
+					<p class="st1">決済方法</p>
+					<p> <img src="http://www.netprice.co.jp/assets/card01.gif"> </p>
+				</li>
+				<li>
+					<p class="st1">代引き手数料</p>
+					<p>315円</p>
+				</li>
+				<li>
+					<p class="st1">ラッピング</p>
+					<p>ラッピング可 (315円)</p>
+				</li>
+			</ul>
+		</div>
+		<div class="bt3" onClick="f_open('payInfo',2)">▼もっと見る▼</div>
+		<br>
+<br>
+
+		<div class="sticker_price">参考価格: 7,900円(税込)</div>
+		<div id="off">11%<br>
+			OFF</div>
+		<div class="price">7,900円</div>
+		
+		<div>
+			<div class="share">シェアする</div>
+			<div class="friends">友達を誘って5％OFF(7,505円)で買う</div>
+		</div><br>
+<br>
+<br>
+
+		
+	</div>
+	<div id="w2" class="no-border">
+	<div class="border-b st3">
+		<div>
+			<div class="share">シェアする</div>
+			<div class="friends">友達を誘って5％OFF(7,505円)で買う</div>
+		</div>
+	</div>
+		<div class="choiceBT cart_in" onClick="f_c1(this)"><img src="02.jpg">ライトグレー／S（◯）</div>
+		<div class="choiceBT cart_in" onClick="f_c1(this)"><img src="02.jpg">ライトグレー／M（◯）</div>
+		<div class="choiceBT off"><img src="02.jpg">ライトグレー／L（X）</div>
+		<div class="choiceBT cart_in" onClick="f_c1(this)"><img src="03.jpg">ブルーグリーン／S（◯）</div>
+		<div class="choiceBT cart_in" onClick="f_c1(this)"><img src="03.jpg">ブルーグリーン／M（◯）</div>
+		<div class="choiceBT cart_in" onClick="f_c1(this)"><img src="03.jpg">ブルーグリーン／L（◯）</div>
+		<div class="choiceBT cart_in" onClick="f_c1(this)"><img src="04.jpg">オレンジ／S（◯）</div>
+		<div class="choiceBT cart_in" onClick="f_c1(this)"><img src="04.jpg">オレンジ／M（◯）</div>
+		<div class="choiceBT off"><img src="04.jpg">オレンジ／L（X）</div>
+		<div class="choiceBT cart_in" onClick="f_c1(this)"><img src="05.jpg">ネイビー／S（◯）</div>
+		<div class="choiceBT cart_in" onClick="f_c1(this)"><img src="05.jpg">ネイビー／M（◯）</div>
+		<div class="choiceBT cart_in" onClick="f_c1(this)"><img src="05.jpg">ネイビー／L（◯）</div>
+	</div>
+	<div id="w3" class="no-border"><br>
+
+	カートに入れました
+	<div class="bt1 radius3">購入へ進む</div><br>
+	<div class="bt2 radius3">買物を続ける</div><br>
+<br>
+<br>
+
+	<div class="border-b st4">▼コチラもいかがですか？</div>
+<div class="choiceBT"><img src="http://wm.netprice.co.jp/@0_img/goodsimg/Q44569/m_01.jpg?_ex=100x100">
+激売れメニューが今週ダケ！霧島黒豚やわらか煮<span class="st2">2980円</span></div>
+<div class="choiceBT"><img src="http://wm.netprice.co.jp/@0_img/goodsimg/R38042/m_01new.jpg?_ex=100x100">
+【絶品！】国産のこだわりバジペーニョ黒ラベル 3瓶セット<span class="st2">2980円</span></div>
+<div class="choiceBT"><img src="http://wm.netprice.co.jp/@0_img/goodsimg/R38417/m_01new.jpg?_ex=100x100">
+新商品☆キレイのために♪ザクロ濃縮果汁漬 ドライクランベリー<span class="st2">2980円</span></div>
+<div class="choiceBT"><img src="http://wm.netprice.co.jp/@0_img/goodsimg/R38433/m_01new.jpg?_ex=100x100">
+★超希少★関係者しか味わえなかった！秘蔵のワイン 3本<span class="st2">2980円</span></div><br>
+<br>
+
+<div class="border-b left st4">▼閲覧履歴</div>
+<div class="choiceBT"><img src="http://wm.netprice.co.jp/@0_img/goodsimg/Q44569/m_01.jpg?_ex=100x100">
+激売れメニューが今週ダケ！霧島黒豚やわらか煮<span class="st2">2980円</span></div>
+<div class="choiceBT"><img src="http://wm.netprice.co.jp/@0_img/goodsimg/R38042/m_01new.jpg?_ex=100x100">
+【絶品！】国産のこだわりバジペーニョ黒ラベル 3瓶セット<span class="st2">2980円</span></div>
+<div class="choiceBT"><img src="http://wm.netprice.co.jp/@0_img/goodsimg/R38417/m_01new.jpg?_ex=100x100">
+新商品☆キレイのために♪ザクロ濃縮果汁漬 ドライクランベリー<span class="st2">2980円</span></div>
+<div class="choiceBT"><img src="http://wm.netprice.co.jp/@0_img/goodsimg/R38433/m_01new.jpg?_ex=100x100">
+★超希少★関係者しか味わえなかった！秘蔵のワイン 3本<span class="st2">2980円</span></div>
+	</div>
+</div>
+<div id="err"></div>
+<div id="goodsFooter" class="no-border">netprice.co.jp</div>
+<script>
+var v_y1=0;
+var v_y2=0;
+var v_s=0;
+var v_v1="";
+var v_v2=-1;
+var v_scroll1=v_scroll2=0;
+
+var a_h=new Array();
+var a_h1=[0,0,0];
+var a_h2=["750px","100px","100px"];
+a_h[0]=$("#goodsDes").outerHeight();
+a_h[1]=$("#spec").outerHeight();
+a_h[2]=$("#payInfo").outerHeight();
+$("#goodsDes").css("height",a_h2[0]);
+$("#spec").css("height",a_h2[1]);
+$("#payInfo").css("height",a_h2[2]);
+
+f_log(a_h);
+function f_open(v_n,v_m){
+	if(a_h1[v_m]){
+		$("#"+v_n).css("height",a_h2[v_m]);
+		$(".bt3:eq("+v_m+")").html("▼もっと見る▼");
+		a_h1[v_m]=0;
+	}else{
+		$("#"+v_n).css("height",a_h[v_m]+"px");
+		$(".bt3:eq("+v_m+")").html("▲閉じる▲");
+		a_h1[v_m]=1;
+//		setTimeout("f_h_auto('"+v_n+"')",500);
+	}
+}
+
+function f_h_auto(v_nn){
+	f_log(v_nn);
+	$("#"+v_nn).css('height','auto');
+}
+
+function f_f1(){
+	v_y1=$(this).scrollTop();
+	$("#w1").css("left","-100%");
+	$("#w2").css("left","0");
+	$("#w3").css("left","100%");
+	$("#cartUnit").css("left","-100%");
+	$("#pankuzu").html("&lt;戻る");
+	$(this).scrollTop(v_y2);
+	v_s=2;
+	$(".choiceBT:eq("+v_v2+")").css("background-color","#FF9");
+	f_log(v_y1);
+}
+function f_f2(){
+	v_y2=$(this).scrollTop();
+	$("#w1").css("left","0");
+	$("#w2").css("left","100%");
+	$("#w3").css("left","200%");
+	$("#cartUnit").css("left","0");
+	$("#pankuzu").html("&lt;ファッション");
+	$(".choiceBT").css("background-color","#FFF");
+	$(".off").css("background-color","#999");
+	$(this).scrollTop(v_y1);
+	v_s=0;
+}
+function f_f3(){
+	v_y2=$(this).scrollTop();
+	$("#w1").css("left","-200");
+	$("#w2").css("left","-100%");
+	$("#w3").css("left","0");
+//	$("#cartUnit").css("left","-100%");
+	$("#pankuzu").html("&lt;戻る");
+	$(".choiceBT").css("background-color","#FFF");
+	$(".off").css("background-color","#999");
+	$(this).scrollTop(0);
+	v_s=1;
+}
+
+function f_c1(ev){
+	v_v1=$(ev).text();
+	v_v2=$(".choiceBT").index(ev);
+	f_f3();
+	$(".select_bt").html(v_v1);
+	f_log("v_v2="+v_v2);
+}
+function f_back(){
+	if(v_s){
+		eval("f_f"+v_s+"();");
+	}
+}
+function f_top(){
+	$('body,html').animate({
+		scrollTop: 0
+	}, 500);
+//	$(this).scrollTop(0);
+}
+
+
+
+
+$(window).scroll(function(){
+	v_scroll2=$(this).scrollTop();
+	if(v_scroll1>=v_scroll2){
+		$("#goods_header").css("top","0");
+		
+	}else{
+		$("#goods_header").css("top","-38px");
+	}
+	if(v_scroll2>200){
+		$("#moveTop").css("display","block");
+	}else{
+		$("#moveTop").css("display","none");
+	}
+	v_scroll1=v_scroll2;
+});
+
+function f_log(v_t){
+	$("#err").html($("#err").html()+"<br>"+v_t);
+}
+</script>
+</body>
+</html>

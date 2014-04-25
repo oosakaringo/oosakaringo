@@ -1,0 +1,105 @@
+%!PS-Adobe-3.0
+%%Creator: Adobe Fireworks
+%%DocumentNeededResources: procset Adobe_level2_AI5 1.0 0
+%%+ procset Adobe_packedarray 2.0 0
+%%+ procset Adobe_cmykcolor 1.1 0
+%%+ procset Adobe_cshow 1.1 0
+%%+ procset Adobe_customcolor 1.0 0
+%%+ procset Adobe_typography_AI5 1.0 0
+%%+ procset Adobe_Illustrator_AI5 1.0 0
+%%BoundingBox:0 0 150 150
+%AI3_TemplateBox: 0 0 150 150
+%%PageOrigin:0 0
+%AI5_FileFormat 3
+%AI3_ColorUsage: Color
+%%DocumentProcessColors: Cyan Magenta Yellow Black
+%%EndComments
+%%BeginProlog
+%%EndProlog
+%%BeginSetup
+Adobe_packedarray /initialize get exec
+Adobe_cmykcolor /initialize get exec
+Adobe_cshow /initialize get exec
+Adobe_customcolor /initialize get exec
+Adobe_typography_AI5 /initialize get exec
+Adobe_Illustrator_AI5 /initialize get exec
+%%EndSetup
+1 1 1 1 0 0 0 79 128 255 Lb
+(ÉåÉCÉÑÅ[ 1) Ln
+1.000 1.000 1.000 Xa
+1 XR
+0.00 75.00 m
+0.00 116.42 33.58 150.00 75.00 150.00 c
+116.42 150.00 150.00 116.42 150.00 75.00 c
+150.00 33.58 116.42 0.00 75.00 0.00 c
+33.58 0.00 0.00 33.58 0.00 75.00 c
+f
+1.000000 w
+1 J
+1 j
+1.000 0.400 0.400 XA
+1 XR
+75.00 99.50 m
+65.00 110.50 l
+S
+*u
+0.243 1.000 0.620 Xa
+1 XR
+30.00 42.37 m
+30.00 38.63 l
+30.00 32.76 34.76 28.00 40.63 28.00 c
+109.37 28.00 l
+115.24 28.00 120.00 32.76 120.00 38.63 c
+120.00 42.37 l
+30.00 42.37 l
+f
+48.00 116.00 m
+48.00 113.00 l
+102.00 113.00 l
+102.00 116.00 l
+48.00 116.00 l
+f
+*U
+*u
+0.600 1.000 0.800 Xa
+1 XR
+30.00 113.37 m
+30.00 44.63 l
+30.00 38.76 35.26 34.00 41.13 34.00 c
+109.37 34.00 l
+115.24 34.00 120.00 38.76 120.00 44.63 c
+120.00 113.37 l
+120.00 119.24 115.24 124.00 109.37 124.00 c
+40.63 124.00 l
+34.76 124.00 30.00 119.24 30.00 113.37 c
+f
+48.00 115.00 m
+102.00 115.00 l
+102.00 99.00 l
+48.00 99.00 l
+48.00 115.00 l
+f
+45.70 75.30 m
+44.40 82.40 47.41 90.83 52.85 91.85 c
+64.67 94.06 58.72 76.53 61.21 63.00 c
+63.69 49.47 67.29 45.87 61.85 44.85 c
+56.41 43.83 48.19 61.77 45.70 75.30 c
+f
+104.39 75.30 m
+101.91 61.77 93.68 43.83 88.24 44.85 c
+82.80 45.87 86.40 49.47 88.89 63.00 c
+91.37 76.53 85.42 94.06 97.24 91.85 c
+102.68 90.83 105.70 82.40 104.39 75.30 c
+f
+*U
+LB
+%%PageTrailer
+gsave annotatepage grestore showpage
+%%Trailer
+Adobe_Illustrator_AI5 /terminate get exec
+Adobe_typography_AI5 /terminate get exec
+Adobe_customcolor /terminate get exec
+Adobe_cshow /terminate get exec
+Adobe_cmykcolor /terminate get exec
+Adobe_packedarray /terminate get exec
+%%EOF
