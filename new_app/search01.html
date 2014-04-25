@@ -407,7 +407,10 @@ input[type="checkbox"]:checked:after {
 	<g id="back">
 		<polyline points="45.5,0.5 0.5,45.5 45.5,90.5 "/>
 	</g>
-</defs>
+	<g id="up">
+		<polyline points="0.5,45.5 45.5,0.5 90.5,45.5 "/>
+	</g>
+	</defs>
 </svg>
 <article id="wrapper">
 	<section id="nav"> <svg id="back_icon" class="icon" viewBox="-20 -25 150 150" onClick="f_mOpen()">
@@ -427,7 +430,7 @@ input[type="checkbox"]:checked:after {
 		<div class="st2"><svg id="search_icon" class="" viewBox="-10 -10 120 120">
 		<use xlink:href="#search" fill="none" stroke="#FFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"/></svg></div><input type="search" id="searchTxt" value="" placeholder="検索" onKeyPress="f_key(event.keyCode);"><div class="st2" onClick="f_reset();"><svg viewBox="-5 -5 120 120">
 		<use id="close1" xlink:href="#close" fill="#CCC" stroke="#CCC" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/></svg></div><div id="add_term" onClick="f_addTerm();"><svg viewBox="-50 -75 200 200">
-		<use id="more" xlink:href="#more" fill="none" stroke="#FFF" stroke-width="13" stroke-linecap="butt"/></svg></div>
+		<use id="more" xlink:href="#more" fill="none" stroke="#FFF" stroke-width="13" stroke-linecap="butt" /></svg></div>
 		<div id="terms">
 		<span class="st4 st1 t-shadow-w">金額設定</span>
 	<select name="price1">
@@ -479,8 +482,8 @@ input[type="checkbox"]:checked:after {
 <div id=err></div>
 <script>
 
-//var v_load="search.php?v_op=";
-var v_load="http://www.netprice.co.jp/test/10399/search/search.php?v_op=";
+var v_load="search.php?v_op=";
+//var v_load="http://www.netprice.co.jp/test/10399/search/search.php?v_op=";
 var v_key="";
 var v_op="&np=1";
 var a_goods=new Array();
@@ -513,8 +516,15 @@ function f_reset(){
 	window.clearInterval(t_input);
 }
 function f_addTerm(){
-	document.getElementById('terms').style.display="inline-block";
-	document.getElementById('history').style.display="inline-block";
+	if(document.getElementById('terms').style.display=="inline-block"){
+		document.getElementById('terms').style.display="none";
+		document.getElementById('history').style.display="none";
+		$("#add_term").css("transform","rotate(0deg)");
+	}else{
+		document.getElementById('terms').style.display="inline-block";
+		document.getElementById('history').style.display="inline-block";
+		$("#add_term").css("transform","rotate(-180deg)");
+	}
 }
 function f_sort2(){
 	var a_goods2=new Array();
@@ -558,8 +568,6 @@ function f_loadXML(){
 		"width":"40",
 		"padding":"6"
 	});
-
-
 	var v_getURL=v_load+v_key+v_op;
 	var v_i=0;
 //	f_log(v_getURL);
