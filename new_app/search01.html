@@ -219,6 +219,7 @@ p {
 	line-height: 1em;
 	margin: 0.3em;
 	color: #09F;
+	display: block;
 }
 .goods {
 	background-color: #F9F9F9;
@@ -341,6 +342,9 @@ label {
 	padding-top: 0.8em;
 	padding-bottom: 0.8em;
 }
+input:focus, select:focus, textarea:focus {
+outline:none;
+}
 input[type="checkbox"] {
 	background-color: #DDD;
 	width: 60px;
@@ -462,15 +466,15 @@ input[type="checkbox"]:checked:after {
 	</select>
 	<span class="st4 st1 t-shadow-w">カテゴリを選ぶ</span>
 	<label>レディースファッション<br><input type="checkbox" name="checkbox" value="01"></label><label>ブランド<br><input type="checkbox" name="checkbox" value="02"></label><label>ダイエット＆健康<br><input type="checkbox" name="checkbox" value="03"></label><label>美容＆コスメ<br><input type="checkbox" name="checkbox" value="04"></label><label>生活雑貨＆家電<br><input type="checkbox" name="checkbox" value="05"></label><label>フード＆ドリンク<br><input type="checkbox" name="checkbox" value="06"></label><label>メンズ<br><input type="checkbox" name="checkbox" value="07"></label><label>24バリュー<br><input type="checkbox" name="checkbox" value="0"></label>
-	<div class="historyBt" onClick="f_sort2(0)">絞込み検索</div>
+	<br><div class="historyBt" onClick="f_sort2(0)">絞込み検索</div>
 	</div>
 </form>
 
 <div id="history">
-<div class="s-hr"></div>
+<!--div class="s-hr"></div>
 <p class="st1 t-shadow-w">検索履歴</p>
 <button class="historyBt">ブーツ</button><button class="historyBt">財布</button><button class="historyBt">春物レインコート</button><button class="historyBt">ヴィヴィアンウエストウッド</button><button class="historyBt">パープルブーツ</button>
-<div class="txtBt">さらに表示</div>
+<div class="txtBt">さらに表示</div-->
 </div>
 
 </section>
@@ -480,18 +484,32 @@ input[type="checkbox"]:checked:after {
 	</section>
 </article>
 <div id=err></div>
+
+
+
 <script>
 
 var v_load="search.php?v_op=";
 //var v_load="http://www.netprice.co.jp/test/10399/search/search.php?v_op=";
 var v_key="";
+var v_keyword="";
+var a_storage=new Array();
+var v_stoLength=0;
 var v_op="&np=1";
 var a_goods=new Array();
 var v_total=0;
 var v_sortNo=2;
+var v_storage = localStorage.searchWords;
+
+
+
+f_getStorage();
+
+
 
 function f_search(){
-	v_key = encodeURI(document.getElementById("searchTxt").value);
+	v_keyword=document.getElementById("searchTxt").value;
+	v_key = encodeURI(v_keyword);
 	$('#searchTxt').blur();
 	f_reset();
 	f_loadXML();
@@ -509,19 +527,23 @@ function f_reset(){
 
 var t_input = null;
 var input = document.getElementById("searchTxt");
+//文字が入力された時に反応
 input.addEventListener("focus", function(){
 	window.clearInterval(t_input);
 	t_input = window.setInterval(function(){
 		if(document.getElementById("searchTxt").value){
-		$("#close1").css("fill","#999");
+			$("#close1").css("fill","#999");
 		}else{
 			$("#close1").css("fill","#CCC");
 		}
-    }, 10);
+	}, 10);
 }, false);
+//文字入力から外れた際にsetIntervalを解除
 input.addEventListener("blur", function(){
 	window.clearInterval(t_input);
 }, false);
+
+
 function f_resetWord(){
 	document.getElementById("searchTxt").value="";
 	$("#close1").css("fill","#CCC");
@@ -637,6 +659,7 @@ try {
 
 	}
 	document.getElementById('main').innerHTML =v_html;
+	f_setKeyword(); //ストレージに保存
 	if(document.getElementById('terms').style.display=="inline-block"){
 		document.getElementById('history').style.display="none";
 		$(window).scrollTop(500);
@@ -648,19 +671,15 @@ function f_sort(v_n){
 	switch (v_n){
 		case 1:
 		a_goods.sort(function(a, b) {return (b[7] - a[7]);});
-//		f_set();
 		break;
 		case 2:
 		a_goods.sort(function(a,b){return(a[3] - b[3]);});
-//		f_set();
 		break;
 		case 3:
 		a_goods.sort(function(a, b) {return (b[8] - a[8]);});
-//		f_set();
 		break;
 		default:
 		a_goods.sort(function(a, b) {return (a[20] - b[20]);});
-//		f_set();
 		break;
 	}
 }
@@ -672,9 +691,45 @@ function f_key(code){
 	}
 }
 
+//検索履歴　表示　保存
+//v_storage = "bag,バナナ,傘";//テスト用
+function f_getStorage() {
+	var v_searchHtml="";
+	try {
+		a_storage =v_storage.split(",");
+		v_stoLength=a_storage.length;
+		if(v_stoLength>0){
+			v_searchHtml="<div class=s-hr></div><p class=st1 t-shadow-w>検索履歴</p>";
+			for(var i=0; i<v_stoLength; i++){
+				v_searchHtml += "<button class='historyBt' onClick='f_history(\""+a_storage[i]+"\")'>"+a_storage[i]+"</button>";
+			}
+			if(v_stoLength>6){
+				v_searchHtml +="<div class='txtBt' onClick='f_searchOp'>さらに表示</div>";
+			}
+			document.getElementById("history").innerHTML = v_searchHtml;
+		}
+	}catch(e){}
+}
 
 
+function f_setKeyword(){
+	var v_txt=v_keyword;
+	for(var i=0; i<v_stoLength; i++){
+//		f_log(v_keyword+"/"+a_storage[i]);
+		if(v_keyword!=a_storage[i]){
+			v_txt+=","+a_storage[i];
+		}
+	}
 
+	localStorage.searchWords=v_txt;
+}
+
+
+function f_history(v_word){
+	document.getElementById("searchTxt").value=v_word;
+	f_search();
+//	f_log(v_word);
+}
 
 function f_log(v_t){
 	document.getElementById('err').innerHTML = String(v_t)+"<br>"+document.getElementById('err').innerHTML;
