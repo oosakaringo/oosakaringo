@@ -232,6 +232,8 @@ p {
 .goods img {
 	float: left;
 	width: 30%;
+	max-width: 200px;
+	max-height: 200px;
 	margin-right: 0.5em;
 }
 .goods .name {
@@ -434,7 +436,7 @@ input[type="checkbox"]:checked:after {
 		<div class="st2"><svg id="search_icon" class="" viewBox="-10 -10 120 120">
 		<use xlink:href="#search" fill="none" stroke="#FFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"/></svg></div><input type="search" id="searchTxt" value="" placeholder="検索" onKeyPress="f_key(event.keyCode);"><div class="st2" onClick="f_resetWord();"><svg viewBox="-5 -5 120 120">
 		<use id="close1" xlink:href="#close" fill="#CCC" stroke="#CCC" stroke-linecap="round" stroke-linejoin="round" stroke-width="5"/></svg></div><div id="add_term" onClick="f_addTerm();"><svg viewBox="-50 -75 200 200">
-		<use id="more" xlink:href="#more" fill="none" stroke="#FFF" stroke-width="13" stroke-linecap="butt" /></svg></div>
+		<use id="more" xlink:href="#more" fill="none" stroke="#FFF" stroke-width="13" stroke-linecap="butt" /></svg></div><br>
 		<div id="terms">
 		<span class="st4 st1 t-shadow-w">金額設定</span>
 	<select name="price1">
@@ -466,20 +468,15 @@ input[type="checkbox"]:checked:after {
 	</select>
 	<span class="st4 st1 t-shadow-w">カテゴリを選ぶ</span>
 	<label>レディースファッション<br><input type="checkbox" name="checkbox" value="01"></label><label>ブランド<br><input type="checkbox" name="checkbox" value="02"></label><label>ダイエット＆健康<br><input type="checkbox" name="checkbox" value="03"></label><label>美容＆コスメ<br><input type="checkbox" name="checkbox" value="04"></label><label>生活雑貨＆家電<br><input type="checkbox" name="checkbox" value="05"></label><label>フード＆ドリンク<br><input type="checkbox" name="checkbox" value="06"></label><label>メンズ<br><input type="checkbox" name="checkbox" value="07"></label><label>24バリュー<br><input type="checkbox" name="checkbox" value="0"></label>
-	<br><div class="historyBt" onClick="f_sort2(0)">絞込み検索</div>
+	<br><div class="historyBt" onClick="f_sort2(10)">絞込み検索</div>
 	</div>
 </form>
-
-<div id="history">
-<!--div class="s-hr"></div>
-<p class="st1 t-shadow-w">検索履歴</p>
-<button class="historyBt">ブーツ</button><button class="historyBt">財布</button><button class="historyBt">春物レインコート</button><button class="historyBt">ヴィヴィアンウエストウッド</button><button class="historyBt">パープルブーツ</button>
-<div class="txtBt">さらに表示</div-->
-</div>
+<div id="searchAlert" class="st1"></div>
+<div id="history"></div>
 
 </section>
 	<section id="scene2">
-	<div id="sortBts"><button class="btOn" onClick="f_sort2(0)">オススメ順</button><button onClick="f_sort2(1)">クチコミ順</button><button onClick="f_sort2(2)">価格が安い</button><button onClick="f_sort2(3)">OFF率が高い</button></div>
+	<div id="sortBts"><button class="btOn" onClick="f_sort2(0)">オススメ順</button><button onClick="f_sort2(1)">クチコミ順</button><button onClick="f_sort2(2)">価格が安い</button><button onClick="f_sort2(3)">OFF率が高い</button></div><br>
 		<div id="main"></div>
 	</section>
 </article>
@@ -498,15 +495,16 @@ var v_stoLength=0;
 var v_op="&np=1";
 var a_goods=new Array();
 var v_total=0;
+var v_total2=0;
 var v_sortNo=2;
 var v_storage = localStorage.searchWords;
-
+var v_sortNo=0;
 
 
 f_getStorage();
 
 
-
+//検索開始
 function f_search(){
 	v_keyword=document.getElementById("searchTxt").value;
 	v_key = encodeURI(v_keyword);
@@ -514,7 +512,7 @@ function f_search(){
 	f_reset();
 	f_loadXML();
 }
-
+//詳細検索をリセット
 function f_reset(){
 	for(i=0 ; i<8 ; i++){
 		if(document.form1.checkbox[i].checked){
@@ -525,9 +523,9 @@ function f_reset(){
 	$("select[name='price2']").val(10000000);
 }
 
+//文字が入力された時に反応
 var t_input = null;
 var input = document.getElementById("searchTxt");
-//文字が入力された時に反応
 input.addEventListener("focus", function(){
 	window.clearInterval(t_input);
 	t_input = window.setInterval(function(){
@@ -542,29 +540,55 @@ input.addEventListener("focus", function(){
 input.addEventListener("blur", function(){
 	window.clearInterval(t_input);
 }, false);
-
-
+//文字リセット
 function f_resetWord(){
 	document.getElementById("searchTxt").value="";
 	$("#close1").css("fill","#CCC");
 	window.clearInterval(t_input);
+	$('#searchTxt').focus();
 }
+//検索条件追加
 function f_addTerm(){
 	if(document.getElementById('terms').style.display=="inline-block"){
 		document.getElementById('terms').style.display="none";
-		document.getElementById('history').style.display="none";
+//		document.getElementById('history').style.display="none";
 		$("#add_term").css("transform","rotate(0deg)");
 	}else{
 		document.getElementById('terms').style.display="inline-block";
-		document.getElementById('history').style.display="inline-block";
+//		document.getElementById('history').style.display="inline-block";
 		$("#add_term").css("transform","rotate(-180deg)");
 	}
 }
+//金額口コミ等でソート
+function f_sort(v_n){
+	$("#sortBts button").removeClass("btOn");
+	$("#sortBts button:eq("+v_n+")").addClass("btOn");
+	v_sortNo=v_n;
+	switch (v_n){
+		case 1:
+		a_goods.sort(function(a, b) {return (b[7] - a[7]);});
+		break;
+		case 2:
+		a_goods.sort(function(a,b){return(a[3] - b[3]);});
+		break;
+		case 3:
+		a_goods.sort(function(a, b) {return (b[8] - a[8]);});
+		break;
+		default:
+		a_goods.sort(function(a, b) {return (a[20] - b[20]);});
+		break;
+	}
+}
+//ジャンル金額範囲でソート
 function f_sort2(v_n){
 	var a_goods2=new Array();
 	var a_goods0=a_goods;
 	var v_price1=parseInt($("select[name='price1']").val());
 	var v_price2=parseInt($("select[name='price2']").val());
+	v_total2=0;
+	if(v_n==10){
+		v_n=v_sortNo;
+	}
 //	a_goods.sort(function(a,b){return(a[3] - b[3]);});
 	f_sort(v_n);
 	for(i = 0; i < v_total; i++) {
@@ -580,34 +604,33 @@ function f_sort2(v_n){
 		if(document.form1.checkbox[i].checked){
 			v_hhh++;
 			var v_s=document.form1.checkbox[i].value;
+			v_total2+=$("."+v_s).length;
 			$("."+v_s).show();
 		}
 	}
-	if(v_hhh==0){
-		$(".goods").show();
+	if(v_total2==0 && v_hhh!=0){
+		document.getElementById('terms').style.display="inline-block";
+		document.getElementById('sortBts').style.display="none";
+		$("#add_term").css("transform","rotate(-180deg)");
+		document.getElementById('searchAlert').innerHTML="この条件ではヒットしませんでした。";
+	}else{
+		document.getElementById('sortBts').style.display="inline-block";
+		document.getElementById('searchAlert').innerHTML="";
 	}
+	v_total2=$(".goods:visible").length;
+	if(v_hhh==0){
+		document.getElementById('total').innerHTML=v_total+"件";
+		$(".goods").show();
+	}else{
+		document.getElementById('total').innerHTML=v_total2+"/"+v_total;
+	}
+	
 	a_goods=a_goods0;
 //	f_log(v_price1+"/"+v_price2);
 }
-
+//XML読み込み
 function f_loadXML(){
 	document.getElementById('main').innerHTML ="";
-	document.getElementById('history').style.display="none";
-	document.getElementById('scene2').style.display="inline-block";
-	document.getElementById('add_term').style.display="inline-block";
-	$("#searchTxt").css({
-		"height":"40",
-		"font-size":"80%",
-		"width":"50%"
-	});
-	$(".st2").css({
-		"box-sizing":"border-box",
-		"-moz-box-sizing":"border-box",
-		"-webkit-box-sizing":"border-box",
-		"height":"40",
-		"width":"40",
-		"padding":"6"
-	});
 	var v_getURL=v_load+v_key+v_op;
 	var v_i=0;
 //	f_log(v_getURL);
@@ -638,12 +661,59 @@ function f_loadXML(){
 		}catch(e){}
 //		f_log(a_goods[i][8]);
 	}
-	v_total = v_i;
-	f_set();
+	if(v_i>0){
+		$("#searchTxt").css({
+			"height":"40",
+			"font-size":"80%",
+			"width":"50%"
+		});
+		$(".st2").css({
+			"box-sizing":"border-box",
+			"-moz-box-sizing":"border-box",
+			"-webkit-box-sizing":"border-box",
+			"height":"40",
+			"width":"40",
+			"padding-top":"6px",
+			"padding-bottom":"6px",
+			"padding-left":"6px",
+			"padding-right":"6px"
+		});
+		document.getElementById('history').style.display="none";
+		document.getElementById('scene2').style.display="inline-block";
+		document.getElementById('add_term').style.display="inline-block";
+		document.getElementById('searchAlert').innerHTML="";
+		v_total = v_i;
+		f_sort2(10);
+	}else{
+		$("#searchTxt").css({
+			"height":"60",
+			"font-size":"100%",
+			"width":"60%"
+		});
+		$(".st2").css({
+			"box-sizing":"content-box",
+			"-moz-box-sizing":"content-box",
+			"-webkit-box-sizing":"content-box",
+			"height":"30",
+			"width":"30",
+			"padding-top":"15px",
+			"padding-bottom":"15px",
+			"padding-left":"10px",
+			"padding-right":"0"
+		});
+		document.getElementById('history').style.display="inline-block";
+		document.getElementById('scene2').style.display="none";
+		document.getElementById('add_term').style.display="none";
+		document.getElementById('terms').style.display="none";
+		document.getElementById('searchAlert').innerHTML="このワードではヒットしませんでした。";
+		$('#searchTxt').focus();
+	}
+//	f_set();
 }
+//htmlセット
 function f_set(){
 //f_log(a_goods.length)
-	var v_html='';
+	var v_html='<span id="total" class="st1"></span>';
 	for(i = 0; i < v_total; i++) {
 try {
 		var v_off="";
@@ -662,29 +732,11 @@ try {
 	f_setKeyword(); //ストレージに保存
 	if(document.getElementById('terms').style.display=="inline-block"){
 		document.getElementById('history').style.display="none";
-		$(window).scrollTop(500);
+		f_addTerm();
+//		$(window).scrollTop(500);
 	}
 }
-function f_sort(v_n){
-	$("#sortBts button").removeClass("btOn");
-	$("#sortBts button:eq("+v_n+")").addClass("btOn");
-	switch (v_n){
-		case 1:
-		a_goods.sort(function(a, b) {return (b[7] - a[7]);});
-		break;
-		case 2:
-		a_goods.sort(function(a,b){return(a[3] - b[3]);});
-		break;
-		case 3:
-		a_goods.sort(function(a, b) {return (b[8] - a[8]);});
-		break;
-		default:
-		a_goods.sort(function(a, b) {return (a[20] - b[20]);});
-		break;
-	}
-}
-$('#searchTxt').focus();
-
+//エンターキーを押した時
 function f_key(code){
 	if(13 === code){
 		f_search();
@@ -692,7 +744,6 @@ function f_key(code){
 }
 
 //検索履歴　表示　保存
-//v_storage = "bag,バナナ,傘";//テスト用
 function f_getStorage() {
 	var v_searchHtml="";
 	try {
@@ -703,38 +754,47 @@ function f_getStorage() {
 			for(var i=0; i<v_stoLength; i++){
 				v_searchHtml += "<button class='historyBt' onClick='f_history(\""+a_storage[i]+"\")'>"+a_storage[i]+"</button>";
 			}
-			if(v_stoLength>6){
-				v_searchHtml +="<div class='txtBt' onClick='f_searchOp'>さらに表示</div>";
+			if(v_stoLength>10){
+				v_searchHtml +="<div class='txtBt' onClick='f_searchOp()'>さらに表示</div>";
 			}
 			document.getElementById("history").innerHTML = v_searchHtml;
+			if(v_stoLength>10){
+				$(".historyBt:gt(10)").hide();
+			}
 		}
 	}catch(e){}
 }
-
-
+function f_searchOp(){
+	$(".txtBt").hide();
+	$(".historyBt:gt(10)").show();
+}
+//ストレージに履歴を保存
 function f_setKeyword(){
 	var v_txt=v_keyword;
+	if(v_stoLength>20){
+		v_stoLength=20;
+	}
 	for(var i=0; i<v_stoLength; i++){
-//		f_log(v_keyword+"/"+a_storage[i]);
 		if(v_keyword!=a_storage[i]){
 			v_txt+=","+a_storage[i];
 		}
 	}
-
 	localStorage.searchWords=v_txt;
 }
-
-
+//検索履歴から検索
 function f_history(v_word){
 	document.getElementById("searchTxt").value=v_word;
 	f_search();
-//	f_log(v_word);
 }
 
+
+//ログ
 function f_log(v_t){
 	document.getElementById('err').innerHTML = String(v_t)+"<br>"+document.getElementById('err').innerHTML;
 }
 
+//検索窓にフォーカス
+$('#searchTxt').focus();
 </script>
 </body>
 </html>
