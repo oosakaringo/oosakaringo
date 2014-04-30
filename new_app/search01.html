@@ -508,6 +508,7 @@ f_getStorage();
 function f_search(){
 	v_keyword=document.getElementById("searchTxt").value;
 	v_key = encodeURI(v_keyword);
+//	f_log(v_suggest);
 	$('#searchTxt').blur();
 	f_reset();
 	f_loadXML();
