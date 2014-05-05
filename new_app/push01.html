@@ -1,0 +1,432 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name='viewport' content='width=320, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0'>
+<title>push</title>
+<script src='http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js'></script>
+</head>
+<style type="text/css">
+body {
+	margin: 0px;
+	color: #333;
+	font-size: 14px;
+	line-height: 1.4em;
+	font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+	text-align: center;
+	background-color: #EEE;
+	word-break:break-all;
+}
+section {
+	margin: 0px;
+	overflow: hidden;
+	width: 100%;
+}
+a {
+	text-decoration: none;
+	color: #333;
+}
+.b-shadow {
+	box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+	-moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+	-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.3);
+}
+.radius3 {
+	border-radius: 0.3em;
+	-moz-border-radius: 0.3em;
+	-webkit-border-radius: 0.3em;
+}
+.radius5 {
+	border-radius: 0.5em;
+	-moz-border-radius: 0.5em;
+	-webkit-border-radius: 0.5em;
+}
+.t-shadow-b {
+	text-shadow:0px -1px 0px rgba(0,0,0,0.3);
+}
+.t-shadow-b2 {
+	text-shadow:0px 1px 0px rgba(0,0,0,0.3);
+}
+.t-shadow-w, .txtBt {
+	text-shadow:0px 1px 0px #FFF;
+}
+.i-block, article, section, .icon, .push, div, button, #user_rank_icon, .icon2, input, .bt1 {
+	vertical-align: top;
+	display: inline-block;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+.i-block, section, .icon, .push, div, button, input[type="search"], input[type="text"], .goods, select, input, label {
+	vertical-align: top;
+	display: inline-block;
+	appearance: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+}
+.move {
+	transition: 0.2s ease-out;
+	-moz-transition: 0.2s ease-out;
+	-webkit-transition: 0.2s ease-out;
+}
+#nav {
+	z-index: 5;
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	height: 35px;
+	width: 100%;
+	display: block;
+	background-color: rgba(255,255,255,0.7);
+}
+#wrapper {
+	overflow: hidden;
+	position: relative;
+	padding-top: 35px;
+	padding-bottom: 35px;
+	width: 100%;
+	margin: 0px;
+	top: 0px;
+	float: left;
+}
+.push {
+	font-size: 10px;
+	line-height: 1em;
+	font-weight: bold;
+	color: #FFF;
+	background-color: #F33;
+	border-radius: 1em;
+	-moz-border-radius: 1em;
+	-webkit-border-radius: 1em;
+	padding: 0.3em;
+	min-width: 1em;
+	top: 8px;
+	position: relative;
+}
+.icon {
+	height: 35px;
+	width: 35px;
+	position: absolute;
+}
+#shipping {
+	width: 80px;
+}
+
+#user_rank_icon {
+	width: 100px;
+	float: left;
+	height: 100px;
+}
+#cart_icon {
+	right: 60px;
+}
+#favorit_icon {
+	right: 7px;
+}
+#history_icon {
+	right: 110px;
+}
+#netprice_icon {
+	left: 5px;
+	height: 35px;
+	width: 90px;
+	position: absolute;
+}
+#user_data {
+	background-color: #FFF;
+	border-bottom-width: thin;
+	border-bottom-style: solid;
+	border-bottom-color: #DDD;
+	padding: 0.5em;
+}
+#user_name {
+	display: block;
+}
+#cart_no {
+	right: 50px;
+	position: absolute;
+	height: 35px;
+	width: 50px;
+	top: 0px;
+	display: block;
+}
+#user_rank_name {
+	font-size: 90%;
+	font-weight: bold;
+	margin-top: -4em;
+	color: #FFF;
+}
+#user_name:after {
+	content: "さん";
+	font-size: 90%;
+	padding-left: 0.5em;
+}
+#user_rank_term {
+	margin-top: -4em;
+	color: #0CC;
+}
+#user_shipping_free {
+	color: #198;
+}
+.st1 {
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+.font-s {
+	font-size: 70%;
+	line-height: 1.2em;
+}
+.font-l, .st1 {
+	font-size: 120%;
+	line-height: 1.5em;
+	font-weight: bold;
+}
+input[type="text"],input[type="password"] {
+	background-color: #DDD;
+}
+input[type="text"],input[type="password"], .bt1 {
+	padding: 1em;
+	width: 98%;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	font-size: 110%;
+}
+#loginBt {
+	width: 100%;
+}
+.on {
+	background-color: #3C9;
+	color: #FFF;
+	font-weight: bold;
+}
+.off {
+	border: thin solid #EEE;
+	color: #999;
+}
+</style>
+<body>
+<svg class="d-none" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="0" height="0" viewBox="0 0 0 0" style="enable-background:new 0 0 0 0;" xml:space="preserve">
+<defs>
+	<g id="logo">
+		<path fill="#231F20" d="M1.5,46.9v11.5h4v-4.9c0-2.5,0.8-3.6,2.5-3.6c1.1,0,1.8,0.7,1.8,2.9v5.6h4v-7.2c0-2.4-1.3-4.6-4.4-4.6c-1.8,0-3.4,0.7-4.2,2.4h0v-2.1H1.5z M24.6,51.5h-4.4c0.1-1.3,0.8-2.4,2.2-2.4C24,49.1,24.6,50.2,24.6,51.5z M20.2,53.8h8v-0.7c0-3.4-1.6-6.4-5.8-6.4c-3.6,0-6.2,2.2-6.2,6c0,3.8,2.9,6,6.7,6c1.5,0,2.9-0.2,4.2-0.7v-2.8c-1.2,0.6-2.4,0.9-3.5,0.9C21.7,56,20.5,55.4,20.2,53.8z M29.3,46.9v2.8h2.3v4.7c0,2.7,0.9,4.3,4.4,4.3c1,0,1.8-0.1,2.5-0.2l-0.1-2.6c-0.4,0.1-0.8,0.2-1.2,0.2c-1.3,0-1.6-0.7-1.6-2.1v-4.2h2.8v-2.8h-2.8v-3.8l-3.9,1.2v2.6H29.3z M51.3,49.7c1.6,0,2.4,1.3,2.4,2.8c0,1.8-0.9,3.1-2.4,3.1c-1.3,0-2.4-1.3-2.4-2.9C48.9,50.9,49.8,49.7,51.3,49.7z M44.9,46.9V63h4v-6.2h0.1c0.8,1.4,2.3,1.9,3.6,1.9c3.4,0,5.3-2.8,5.3-6.2c0-2.8-1.8-5.8-4.9-5.8c-1.8,0-3.5,0.7-4.3,2.3h-0.1v-2.1H44.9z M67.8,50.1l0.2-3.3c-0.4-0.1-0.9-0.1-1.4-0.1c-1.7,0-2.7,0.9-3.4,2.4h0v-2.1h-3.6v11.5h4v-4.9c0-2.3,1-3.6,2.9-3.6C66.9,49.9,67.3,49.9,67.8,50.1z M69.6,46.9v11.5h4V46.9H69.6z M73.6,45v-2.9h-4V45H73.6z M85.3,50.2l0.3-2.9c-0.9-0.4-2-0.6-3.2-0.6c-3.8,0-6.7,2.2-6.7,6c0,3.8,2.9,6,6.7,6c1.1,0,2.3-0.2,3.3-0.5l-0.1-3c-0.7,0.3-1.6,0.5-2.5,0.5c-1.7,0-3.3-1.2-3.3-3c0-2,1.3-3.2,3-3.2C83.9,49.5,84.6,49.7,85.3,50.2z M95.4,51.5H91c0.1-1.3,0.8-2.4,2.2-2.4C94.8,49.1,95.4,50.2,95.4,51.5z M91.1,53.8h8v-0.7c0-3.4-1.5-6.4-5.8-6.4c-3.6,0-6.2,2.2-6.2,6c0,3.8,2.9,6,6.7,6c1.5,0,2.9-0.2,4.2-0.7v-2.8c-1.2,0.6-2.4,0.9-3.5,0.9C92.5,56,91.3,55.4,91.1,53.8z"/>
+		<path fill="#0066B3" d="M95.9,29.3H72.1v-1.3l8.4-5.4c0.6-0.4,1-1.1,0.9-1.9c0-0.8-0.5-1.4-1.2-1.7l-8.2-3.8V5.7h23.7V29.3z M99.4,2.2c-0.4-0.4-0.9-0.6-1.5-0.6H70.1c-0.6,0-1.1,0.2-1.5,0.6C68.2,2.6,68,3.1,68,3.7v12.9c0,0.8,0.5,1.5,1.2,1.9l5.9,2.8l-6.2,4c-0.6,0.4-1,1-1,1.7v4.5c0,0.5,0.2,1.1,0.6,1.5c0.4,0.4,0.9,0.6,1.5,0.6h27.8c0.6,0,1.1-0.2,1.5-0.6c0.4-0.4,0.6-0.9,0.6-1.5V3.7C100,3.1,99.8,2.6,99.4,2.2z"/>
+		<path fill="#ED1C24" d="M25.8,18.9c-1.1-0.4-2.3,0.1-2.7,1.2c-0.9,2.2-3,3.8-5.6,3.8c-2.6,0-4.9-1.7-5.6-4c-0.4-1.1-1.5-1.7-2.6-1.3C8.2,19,7.6,20.2,8,21.2c1.4,4,5.1,6.8,9.6,6.8c4.3,0,8-2.7,9.4-6.4C27.4,20.5,26.9,19.4,25.8,18.9z M27.1,27c-2.4,2.4-5.8,3.9-9.5,3.9c-3.7,0-7.1-1.5-9.5-3.9c-2.4-2.4-3.9-5.8-3.9-9.5c0-3.7,1.5-7,3.9-9.5c2.4-2.4,5.8-3.9,9.5-3.9c3.7,0,7.1,1.5,9.5,3.9c2.4,2.4,3.9,5.8,3.9,9.5C31,21.2,29.5,24.6,27.1,27z M17.6,0C7.9,0,0,7.9,0,17.5c0,9.7,7.9,17.5,17.6,17.5s17.6-7.8,17.6-17.5C35.2,7.9,27.3,0,17.6,0z"/>
+		<path fill="#FDB813" d="M40.8,29.3l20.4-11.7L40.8,5.8V29.3z M37.7,34.6c-0.6-0.4-1-1.1-1-1.8V2.2c0-0.7,0.4-1.4,1-1.8c0.6-0.4,1.4-0.4,2.1,0l26.6,15.3c0.6,0.4,1,1,1,1.8c0,0.7-0.4,1.4-1,1.8L39.7,34.6c-0.3,0.2-0.7,0.3-1,0.3S38,34.8,37.7,34.6z"/>
+	</g>
+	<g id="cart_icon">
+		<polygon fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke="#06C" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" points="16,18 88,18 83,55 26,55 "/>
+		<circle fill-rule="evenodd" fill="#06C" clip-rule="evenodd" cx="37.5" cy="62.5" r="6"/>
+		<circle fill-rule="evenodd" fill="#06C" clip-rule="evenodd" cx="72.5" cy="62.5" r="6"/>
+		<line fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke="#06C" stroke-linecap="round" stroke-width="3" stroke-linejoin="round" x1="3" y1="3" x2="16" y2="18"/>
+		<circle fill-rule="evenodd" fill="#06C" clip-rule="evenodd" cx="2.5" cy="2.5" r="4"/>
+	</g>
+	<g id="favorit">
+		<polygon fill-rule="evenodd" clip-rule="evenodd" stroke-linecap="round" stroke-linejoin="round" points="75,13.3 93.5,50.5 134.9,56.4 105,85.4 112,126.2 75,106.9 38.1,126.2 45.1,85.4 15.2,56.4 56.5,50.5 "/>
+	</g>
+	<g id="search">
+		<path d="M0.5,33.5c0-18.2,14.8-33,33.1-33c18.3,0,33.1,14.8,33.1,33c0,18.2-14.8,33-33.1,33C15.3,66.5,0.5,51.7,0.5,33.5z"/>
+		<line x1="55.7" y1="57.8" x2="90.5" y2="92.5"/>
+	</g>
+	<g id="history">
+		<polygon fill-rule="evenodd" clip-rule="evenodd" stroke="none" points="2.05,0 27.42,25.35 2.05,25.35 "/>
+		<path fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke-linecap="square" d="M5.94,22.68c6.8-11.45,19.29-19.13,33.59-19.13c21.55,0,39.02,17.46,39.02,39s-17.47,39-39.02,39c-21.56,0-39.03-17.46-39.03-39"/>
+		<polyline fill-rule="evenodd" clip-rule="evenodd" fill="none" stroke-linecap="round" stroke-linejoin="round" points="	39.55,17.05 39.55,42.05 54.55,62.05 "/>
+	</g>
+	<g id="user_rank">
+		<path fill-rule="evenodd" clip-rule="evenodd" d="M84.47,78V18.52L64.74,38.21L45,18.52L25.26,38.21L5.53,18.52V78H84.47z M78.16,10.24c0,3.27,2.65,5.91,5.92,5.91S90,13.51,90,10.24c0-3.26-2.65-5.91-5.92-5.91S78.16,6.98,78.16,10.24zM11.84,10.24c0-3.26-2.65-5.91-5.92-5.91S0,6.98,0,10.24c0,3.27,2.65,5.91,5.92,5.91S11.84,13.51,11.84,10.24z M37.89,7.09c0,3.92,3.19,7.09,7.11,7.09s7.11-3.17,7.11-7.09S48.92,0,45,0S37.89,3.17,37.89,7.09z"/>
+	</g>
+	<g id="shipping">
+	<path fill-rule="evenodd" clip-rule="evenodd" d="M88,44.9V36H34V11H16.2L9.4,23.6L0,28.73V48h5.38c0.18-5.16,4.47-9.58,9.73-9.58c5.27,0,9.56,4.42,9.73,9.58h40.99c0.17-5.16,4.46-9.58,9.73-9.58s9.55,4.42,9.73,9.58H90v-2.5L88,44.9z M31,14v10H12.43l4.7-10H31z M7.39,48.62c0,4.22,3.46,7.63,7.72,7.63c4.27,0,7.73-3.41,7.73-7.63c0-4.21-3.46-7.62-7.73-7.62C10.85,41,7.39,44.41,7.39,48.62z M67.84,48.62c0,4.22,3.45,7.63,7.72,7.63s7.72-3.41,7.72-7.63c0-4.21-3.45-7.62-7.72-7.62S67.84,44.41,67.84,48.62z M64.04,18.06h3.14c0-1.29-0.31-2.91-1.48-2.91C64.54,15.15,64.1,16.85,64.04,18.06z M74.6,18.06h3.14c0-1.29-0.31-2.91-1.48-2.91C75.1,15.15,74.66,16.85,74.6,18.06z M35,0v35h53
+	V0H35z M47.94,24.94h-2.88V9h7.8v2.82h-4.92v4.27h4.6v2.82h-4.6V24.94z M60.54,13.06v2.85c-0.24-0.07-0.5-0.09-0.86-0.09c-0.9,0-1.74,0.47-2.04,1.59c-0.1,0.3-0.14,0.74-0.14,1.58v5.95h-2.88V16.9c0-1.56-0.04-2.76-0.08-3.84h2.48l0.12,1.7h0.06c0.5-1.24,1.68-1.76,2.6-1.76C60.14,13,60.32,13.02,60.54,13.06z M69.15,21.68l0.41,2.65c-0.93,0.45-2.13,0.67-3.4,0.67c-3.27,0-4.98-2.28-4.98-5.88c0-3.46,1.61-5.85,4.69-5.85c2.49,0,4.19,1.4,4.19,5.52c0,0.42-0.02,0.85-0.09,1.15h-5.91c0.07,1.53,1.23,2.24,2.64,2.24C67.65,22.18,68.43,21.97,69.15,21.68z M79.71,21.68l0.41,2.65c-0.93,0.45-2.13,0.67-3.4,0.67
+	c-3.27,0-4.98-2.28-4.98-5.88c0-3.46,1.61-5.85,4.69-5.85c2.49,0,4.19,1.4,4.19,5.52c0,0.42-0.02,0.85-0.09,1.15h-5.91c0.07,1.53,1.23,2.24,2.64,2.24C78.21,22.18,78.99,21.97,79.71,21.68z"/>
+	</g>
+</defs>
+</svg>
+<article id="wrapper">
+	<section id="nav"> <svg id="netprice_icon" class="" viewBox="0 -4 100 70" onClick="f_mOpen()">
+		<use xlink:href="#logo"/>
+		</svg> <svg id="cart_icon" class="icon" viewBox="-3 -3 100 70">
+		<use xlink:href="#cart_icon"/>
+		</svg> <svg id="favorit_icon" class="icon" viewBox="-5 -10 160 160">
+		<use xlink:href="#favorit" fill="none" stroke="#06C" stroke-width="5"/>
+		</svg><svg id="history_icon" class="icon" viewBox="-10 -20 120 120">
+		<use xlink:href="#history" fill="#06C" stroke="#06C" stroke-width="5"/>
+		</svg>
+		<div id=cart_no>
+			<div class=push>5</div>
+		</div>
+		<div id=favorit_no onClick=f_goFavorit()></div>
+	</section>
+	<section id="user_data">
+	<div id="user_rank_icon">
+	<svg width="100" height="100px" class="gold" viewBox="-5 -5 100 100">
+		<use xlink:href="#user_rank" fill="#EC0"/>
+		</svg>
+		<div id="user_rank_name">ゴールド</div><div id="user_rank_term" class="font-s">～2014/7/8</div></div>
+	<div id="user_name" class="st1">三根　俊輔</div>
+	<div id="shipping">
+	<svg width="80px" height="50px" viewBox="-5 0 100 50">
+		<use xlink:href="#shipping" fill="#198"/>
+		</svg><div id="user_shipping_free" class="font-s">送料無料中</div>
+		</div>
+	</section>
+</article>
+<div id="err"></div>
+
+
+
+
+<script>
+var v_domain="http://www.netprice.co.jp";
+//var v_domain="";
+var myData;		//ユーザー情報格納場所
+var v_loginId="";		//ID格納
+var v_password="";		//パスワード格納
+
+var a_menuHtml=[   //アラートコメント設定
+"<span class=red>OSの設定にてクッキーの受け入れを有効にしてください。</span>",
+
+"<span class=red>データを読み込めませんでした。<br>しばらくしてからもう1度アクセスして下さい。</span>",
+
+
+"ネットプライス会員の方<br><form name='form1'><div id=idAlert></div><input type='text' name='login_id' pattern='[a-zA-Z0-9]+$' autocapitalize='off' onblur='f_idCheck()' placeholder='会員ID' id='np_id'><br><input type='password' name='password' placeholder='パスワード' id='np_pass'></form><div id='loginBt'><span class='bt1 off'>ログイン</span></div><br><br><a href=https://w2.netprice.co.jp/sg/netprice/netprice/member/new/ class='bt1 on'>初めての方</a>",
+
+"<div class='left'>ログインできませんでした。会員IDとパスワードをお確かめ下さい。</div><form name='form1'><div id=idAlert></div><input type='text' name='login_id' pattern='[a-zA-Z0-9]+$' autocapitalize='off' onblur='f_idCheck()' placeholder='会員ID' id='np_id'><br><input type='password' name='password' placeholder='パスワード' id='np_pass'></form><div id='loginBt'><a href='javascript:void(0);' onclick='f_login();' class='bt1 on'>ログイン</a></div><br><br><a href=https://w2.netprice.co.jp/sg/netprice/netprice/remind_id/ class='bt1 on'>会員IDを忘れた方</a><br><a href=https://w2.netprice.co.jp/sg/netprice/netprice/remind/ class='bt1 on'>パスワードを忘れた方</a><br><a href=http://www.netprice.co.jp/help_guide/help_5/#help03 class='bt1 on'>ログインが出来ない方</a><br><br><a href=https://w2.netprice.co.jp/sg/netprice/netprice/member/new/ class='bt1 on'>初めての方</a>",
+
+];
+
+
+//クッキー
+var COOKIE = new Array();
+if (document.cookie) {
+	var cookies = document.cookie.split("; ");
+	for (var i = 0; i < cookies.length; i++) {
+		var str = cookies[i].split("=");
+		COOKIE[str[0]] = unescape(str[1]);
+	}
+}
+if (!navigator.cookieEnabled) {
+	f_menuHtml(0);
+}else{
+	if (COOKIE['MemberID']) {
+		v_memberID=COOKIE['MemberID'];
+f_log("memberID="+v_memberID);
+		f_check();
+	}else{
+		 f_menuHtml(2);
+	}
+}
+function f_menuHtml(v_n){
+	document.getElementById('user_data').innerHTML=a_menuHtml[v_n];
+}
+//データ読み込み
+function f_check(){
+	v_loadJson=v_domain+"/g_bin/api/kizuna/v1/member.json?ao=s%2Cc%2Cp%2Ccm%2Cr%2Cs%2Ctbr%2Cups";
+	httpObj = new XMLHttpRequest();
+	httpObj.open("get", v_loadJson, true);
+	httpObj.onload = function(){
+		myData = JSON.parse(this.responseText);
+		var v_status=myData.status;
+		f_log("status="+v_status);
+		if(v_status=="ok"){
+			f_set();
+		}else{
+			f_menuHtml(1);
+			f_log("error="+myData.error);
+		}
+	}
+	httpObj.send(null);
+}
+
+function f_set(){
+	
+}
+
+
+//文字が入力された時に反応ログイン表示
+var t_pass = null;	　//passが入力されたか監視
+var t_id=null;		//idが入力されたか監視
+f_checkking();
+function f_checkking(){
+	var inputPass = document.getElementById("np_pass");
+	var inputId = document.getElementById("np_id");
+	inputPass.addEventListener("focus", function(){
+		window.clearInterval(t_pass);
+		t_pass = window.setInterval(function(){
+			v_password=document.form1.password.value;
+			f_btCheck();
+		}, 10);
+	}, false);
+	inputId.addEventListener("focus", function(){
+		window.clearInterval(t_id);
+		t_id = window.setInterval(function(){
+			v_loginId=document.form1.login_id.value;
+			f_btCheck();
+		}, 10);
+	}, false);
+	//文字入力から外れた際にsetIntervalを解除
+	inputPass.addEventListener("blur", function(){
+		window.clearInterval(t_pass);
+	}, false);
+	inputId.addEventListener("blur", function(){
+		window.clearInterval(t_id);
+	}, false);
+}
+function f_btCheck(){
+	if(v_password!="" && v_loginId!=""){
+		document.getElementById('loginBt').innerHTML="<a href='javascript:void(0);' onclick='f_login();' class='bt1 on'>ログイン</a>";
+	}else{
+		document.getElementById('loginBt').innerHTML="<span class='bt1 off'>ログイン</span>";
+	}
+}
+//半角英数かチェック
+function f_idCheck(){
+	var v_loginId=document.form1.login_id.value;
+	if(v_loginId.match( /[\w\d!$&*.=^`|~#%'+\\/?{}-]|@/ )){
+		document.getElementById('idAlert').innerHTML="";
+		document.form1.login_id.style.backgroundColor="";
+	}else{
+		document.getElementById('idAlert').innerHTML="会員IDを、半角英数字で入力して下さい。";
+		document.form1.login_id.style.backgroundColor="#FCC";
+	}
+}
+
+//ログインAPIリクエスト
+function f_login(){
+	v_loginId=document.form1.login_id.value;
+	v_password=document.form1.password.value;
+	var v_sendData="login_id="+v_loginId+"&password="+v_password;
+	document.getElementById('user_data').innerHTML="確認中<br><div class=loading></div>";
+	var loginHttpRequest = new XMLHttpRequest();
+	loginHttpRequest.onreadystatechange = function(){
+			if( this.readyState == 4 && this.status == 200 ){
+					var loginData = JSON.parse(this.responseText);
+					v_memberID=loginData.data;
+					f_log("v_memberID="+v_memberID);
+					if(v_memberID==""){
+						f_menuHtml(3);
+						document.form1.login_id.value=v_loginId;
+						document.form1.password.value=v_password;
+						f_checkking();
+					}else{
+						f_check();
+					}
+			}
+	}
+	loginHttpRequest.open('POST', v_domain+'/sg/api/member/login/' );
+	loginHttpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded' );
+	loginHttpRequest.send(v_sendData);
+}
+
+
+
+function f_log(v_t){
+	document.getElementById('err').innerHTML = String(v_t)+"<br>"+document.getElementById('err').innerHTML;
+}
+</script>
+</body>
+</html>

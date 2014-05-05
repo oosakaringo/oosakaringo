@@ -467,7 +467,7 @@ input[type="checkbox"]:checked:after {
 	<option value="10000">10000円</option>
 	</select>
 	<span class="st4 st1 t-shadow-w">カテゴリを選ぶ</span>
-	<label>レディースファッション<br><input type="checkbox" name="checkbox" value="01"></label><label>ブランド<br><input type="checkbox" name="checkbox" value="02"></label><label>ダイエット＆健康<br><input type="checkbox" name="checkbox" value="03"></label><label>美容＆コスメ<br><input type="checkbox" name="checkbox" value="04"></label><label>生活雑貨＆家電<br><input type="checkbox" name="checkbox" value="05"></label><label>フード＆ドリンク<br><input type="checkbox" name="checkbox" value="06"></label><label>メンズ<br><input type="checkbox" name="checkbox" value="07"></label><label>24バリュー<br><input type="checkbox" name="checkbox" value="0"></label>
+	<label>レディースファッション<br><input type="checkbox" name="checkbox" value="01" class="ch"></label><label>ブランド<br><input type="checkbox" name="checkbox" value="02" class="ch"></label><label>ダイエット＆健康<br><input type="checkbox" name="checkbox" value="03" class="ch"></label><label>美容＆コスメ<br><input type="checkbox" name="checkbox" value="04" class="ch"></label><label>生活雑貨＆家電<br><input type="checkbox" name="checkbox" value="05" class="ch"></label><label>フード＆ドリンク<br><input type="checkbox" name="checkbox" value="06" class="ch"></label><label>メンズ<br><input type="checkbox" name="checkbox" value="07" class="ch"></label><label>24バリュー<br><input type="checkbox" name="checkbox" value="0" class="ch"></label>
 	<br><div class="historyBt" onClick="f_sort2(10)">絞込み検索</div>
 	</div>
 </form>
@@ -476,7 +476,7 @@ input[type="checkbox"]:checked:after {
 
 </section>
 	<section id="scene2">
-	<div id="sortBts"><button class="btOn" onClick="f_sort2(0)">オススメ順</button><button onClick="f_sort2(1)">クチコミ順</button><button onClick="f_sort2(2)">価格が安い</button><button onClick="f_sort2(3)">OFF率が高い</button></div><br>
+	<div id="sortBts"><button class="btOn" onClick="f_sort2(0)">キーワード順</button><button onClick="f_sort2(1)">評価が高い</button><button onClick="f_sort2(2)">価格が安い</button><button onClick="f_sort2(3)">OFF率が高い</button></div><br>
 		<div id="main"></div>
 	</section>
 </article>
@@ -523,6 +523,30 @@ function f_reset(){
 	$("select[name='price1']").val(0);
 	$("select[name='price2']").val(10000000);
 }
+
+//タッチでチェックボックスON/OFF
+var _ua = (function(){
+return {
+Touch:typeof document.ontouchstart != "undefined",
+Pointer:window.navigator.pointerEnabled,
+MSPoniter:window.navigator.msPointerEnabled
+}
+})();
+var _start = _ua.Pointer ? 'pointerdown' : _ua.MSPointer ? 'MSPointerDown' : _ua.Touch ? 'touchstart' : 'mousedown';
+var _target =$(".ch ");
+_target.on(_start, function(e){
+	e.preventDefault();
+	f_checkboxOn(_target.index(this));
+});
+
+function f_checkboxOn(v_m){
+	if(document.form1.checkbox[v_m].checked){
+		document.form1.checkbox[v_m].checked=false;
+	}else{
+		document.form1.checkbox[v_m].checked=true;
+	}
+}
+
 
 //文字が入力された時に反応
 var t_input = null;
@@ -618,14 +642,11 @@ function f_sort2(v_n){
 		document.getElementById('sortBts').style.display="inline-block";
 		document.getElementById('searchAlert').innerHTML="";
 	}
-	v_total2=$(".goods:visible").length;
 	if(v_hhh==0){
-		document.getElementById('total').innerHTML=v_total+"件";
 		$(".goods").show();
-	}else{
-		document.getElementById('total').innerHTML=v_total2+"/"+v_total;
 	}
-	
+	v_total2=$(".goods:visible").length;
+	document.getElementById('total').innerHTML=v_total2+"件";
 	a_goods=a_goods0;
 //	f_log(v_price1+"/"+v_price2);
 }
@@ -787,7 +808,6 @@ function f_history(v_word){
 	document.getElementById("searchTxt").value=v_word;
 	f_search();
 }
-
 
 //ログ
 function f_log(v_t){
