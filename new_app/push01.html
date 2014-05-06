@@ -136,14 +136,16 @@ a {
 	width: 90px;
 	position: absolute;
 }
-#user_data {
+#user_data , #user_data2{
 	background-color: #FFF;
 	border-bottom-width: thin;
 	border-bottom-style: solid;
 	border-bottom-color: #DDD;
 	padding: 0.5em;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
 }
-#user_name {
+.d-block, #user_name {
 	display: block;
 }
 #cart_no {
@@ -181,19 +183,31 @@ a {
 	line-height: 1.2em;
 }
 .font-l, .st1 {
-	font-size: 120%;
-	line-height: 1.5em;
+	font-size: 130%;
+	line-height: 1.4em;
 	font-weight: bold;
+}
+.red {
+	color: #F33;	
+}
+.left {
+	text-align: left;	
+}
+.right {
+	text-align: right;	
 }
 input[type="text"],input[type="password"] {
 	background-color: #DDD;
 }
-input[type="text"],input[type="password"], .bt1 {
+input[type="text"],input[type="password"], .bt1, .bt2 {
 	padding: 1em;
 	width: 98%;
 	margin-top: 0.3em;
 	margin-bottom: 0.3em;
 	font-size: 110%;
+}
+.bt2 {
+	margin: 0px;
 }
 #loginBt {
 	width: 100%;
@@ -206,6 +220,17 @@ input[type="text"],input[type="password"], .bt1 {
 .off {
 	border: thin solid #EEE;
 	color: #999;
+}
+.list {
+	border-right-width: thin;
+	border-bottom-width: thin;
+	border-left-width: thin;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-right-color: #EEE;
+	border-bottom-color: #EEE;
+	border-left-color: #EEE;	
 }
 </style>
 <body>
@@ -244,6 +269,9 @@ input[type="text"],input[type="password"], .bt1 {
 	V0H35z M47.94,24.94h-2.88V9h7.8v2.82h-4.92v4.27h4.6v2.82h-4.6V24.94z M60.54,13.06v2.85c-0.24-0.07-0.5-0.09-0.86-0.09c-0.9,0-1.74,0.47-2.04,1.59c-0.1,0.3-0.14,0.74-0.14,1.58v5.95h-2.88V16.9c0-1.56-0.04-2.76-0.08-3.84h2.48l0.12,1.7h0.06c0.5-1.24,1.68-1.76,2.6-1.76C60.14,13,60.32,13.02,60.54,13.06z M69.15,21.68l0.41,2.65c-0.93,0.45-2.13,0.67-3.4,0.67c-3.27,0-4.98-2.28-4.98-5.88c0-3.46,1.61-5.85,4.69-5.85c2.49,0,4.19,1.4,4.19,5.52c0,0.42-0.02,0.85-0.09,1.15h-5.91c0.07,1.53,1.23,2.24,2.64,2.24C67.65,22.18,68.43,21.97,69.15,21.68z M79.71,21.68l0.41,2.65c-0.93,0.45-2.13,0.67-3.4,0.67
 	c-3.27,0-4.98-2.28-4.98-5.88c0-3.46,1.61-5.85,4.69-5.85c2.49,0,4.19,1.4,4.19,5.52c0,0.42-0.02,0.85-0.09,1.15h-5.91c0.07,1.53,1.23,2.24,2.64,2.24C78.21,22.18,78.99,21.97,79.71,21.68z"/>
 	</g>
+	<g id="r-arrow">
+	<polyline points="0.5,0.5 45.5,45.5 0.5,90.5 "/>
+	</g>
 </defs>
 </svg>
 <article id="wrapper">
@@ -262,30 +290,40 @@ input[type="text"],input[type="password"], .bt1 {
 		<div id=favorit_no onClick=f_goFavorit()></div>
 	</section>
 	<section id="user_data">
-	<div id="user_rank_icon">
+	<!--div id="user_rank_icon">
 	<svg width="100" height="100px" class="gold" viewBox="-5 -5 100 100">
 		<use xlink:href="#user_rank" fill="#EC0"/>
 		</svg>
 		<div id="user_rank_name">ゴールド</div><div id="user_rank_term" class="font-s">～2014/7/8</div></div>
 	<div id="user_name" class="st1">三根　俊輔</div>
+	<div class="d-block"><span class="font-s">今週(～2014/05/06 13:00)の<br>お買いもの合計</span>4000<span class="font-s">円です！<br>5000円以上で</span><span class="red">送料無料</span></div>
 	<div id="shipping">
 	<svg width="80px" height="50px" viewBox="-5 0 100 50">
 		<use xlink:href="#shipping" fill="#198"/>
 		</svg><div id="user_shipping_free" class="font-s">送料無料中</div>
-		</div>
+		</div-->
+	</section>
+	<section id="user_data2">
+		<div class="bt1 off" onClick="f_logout()">ログアウト　<span class="font-s">中尾　義昭さんでは無い時</span></div>
 	</section>
 </article>
 <div id="err"></div>
 
-
+ style="display:none"
 
 
 <script>
-var v_domain="http://www.netprice.co.jp";
-//var v_domain="";
-var myData;		//ユーザー情報格納場所
-var v_loginId="";		//ID格納
-var v_password="";		//パスワード格納
+//var v_domain="http://www.netprice.co.jp";
+var v_domain="";
+var v_loginId="";		//ID入力格納
+var v_password="";		//パスワード入力格納
+var myData,v_userName,v_userSex,v_userMemberRank,v_userCoupon,v_userPoint,v_userWeeklyTotal,v_userCpmRank,v_userHasRegularPurchase,v_userNextCloseDate;		//ユーザー情報格納場所
+
+var a_userRank=new Array();
+a_userRank[0]=["regular","#3C9","レギュラー"];
+a_userRank[10]=["silver","#999","シルバー"];
+a_userRank[20]=["gold","#EC0","ゴールド"];
+a_userRank[30]=["platinum","#000","プラチナ"];
 
 var a_menuHtml=[   //アラートコメント設定
 "<span class=red>OSの設定にてクッキーの受け入れを有効にしてください。</span>",
@@ -295,7 +333,7 @@ var a_menuHtml=[   //アラートコメント設定
 
 "ネットプライス会員の方<br><form name='form1'><div id=idAlert></div><input type='text' name='login_id' pattern='[a-zA-Z0-9]+$' autocapitalize='off' onblur='f_idCheck()' placeholder='会員ID' id='np_id'><br><input type='password' name='password' placeholder='パスワード' id='np_pass'></form><div id='loginBt'><span class='bt1 off'>ログイン</span></div><br><br><a href=https://w2.netprice.co.jp/sg/netprice/netprice/member/new/ class='bt1 on'>初めての方</a>",
 
-"<div class='left'>ログインできませんでした。会員IDとパスワードをお確かめ下さい。</div><form name='form1'><div id=idAlert></div><input type='text' name='login_id' pattern='[a-zA-Z0-9]+$' autocapitalize='off' onblur='f_idCheck()' placeholder='会員ID' id='np_id'><br><input type='password' name='password' placeholder='パスワード' id='np_pass'></form><div id='loginBt'><a href='javascript:void(0);' onclick='f_login();' class='bt1 on'>ログイン</a></div><br><br><a href=https://w2.netprice.co.jp/sg/netprice/netprice/remind_id/ class='bt1 on'>会員IDを忘れた方</a><br><a href=https://w2.netprice.co.jp/sg/netprice/netprice/remind/ class='bt1 on'>パスワードを忘れた方</a><br><a href=http://www.netprice.co.jp/help_guide/help_5/#help03 class='bt1 on'>ログインが出来ない方</a><br><br><a href=https://w2.netprice.co.jp/sg/netprice/netprice/member/new/ class='bt1 on'>初めての方</a>",
+"<div class='left'>ログインできませんでした。会員IDとパスワードをお確かめ下さい。</div><form name='form1'><div id=idAlert></div><input type='text' name='login_id' pattern='[a-zA-Z0-9]+$' autocapitalize='off' onblur='f_idCheck()' placeholder='会員ID' id='np_id'><br><input type='password' name='password' placeholder='パスワード' id='np_pass'></form><div id='loginBt'><a href='javascript:void(0);' onclick='f_login();' class='bt1 on'>ログイン</a></div><br><br><a href=https://w2.netprice.co.jp/sg/netprice/netprice/remind_id/ class='bt1 off'>会員IDを忘れた方</a><br><a href=https://w2.netprice.co.jp/sg/netprice/netprice/remind/ class='bt1 off'>パスワードを忘れた方</a><br><a href=http://www.netprice.co.jp/help_guide/help_5/#help03 class='bt1 off'>ログインが出来ない方</a><br><br><a href=https://w2.netprice.co.jp/sg/netprice/netprice/member/new/ class='bt1 on'>初めての方</a>",
 
 ];
 
@@ -309,6 +347,7 @@ if (document.cookie) {
 		COOKIE[str[0]] = unescape(str[1]);
 	}
 }
+
 if (!navigator.cookieEnabled) {
 	f_menuHtml(0);
 }else{
@@ -318,8 +357,17 @@ f_log("memberID="+v_memberID);
 		f_check();
 	}else{
 		 f_menuHtml(2);
+		 f_checkking();
 	}
 }
+//ログアウト（クッキー削除）
+function f_logout(){
+	dTime = new Date();
+	dTime.setYear(dTime.getYear() - 1);
+	document.cookie = "MemberID=; domain=.netprice.co.jp; path=/; expires=" + dTime.toGMTString();
+	f_menuHtml(2);
+}
+
 function f_menuHtml(v_n){
 	document.getElementById('user_data').innerHTML=a_menuHtml[v_n];
 }
@@ -343,14 +391,37 @@ function f_check(){
 }
 
 function f_set(){
+	var v_html="";
+	v_userName=myData.data.family_name+"　"+myData.data.first_name;
+	v_userSex=myData.data.sex;
+	v_userMemberRank=myData.data.member_rank;
+	v_userCoupon=myData.data.coupon;
+	v_userPoint=myData.data.point;
+	v_userWeeklyTotal=myData.data.weekly_total;
+	v_userCpmRank=myData.data.cpm_rank;
+	v_userHasRegularPurchase=myData.data.has_regular_purchase;
+	v_userNextCloseDate=myData.data.next_close_date;
 	
+	var v_userInfo="";
+	if(v_userWeeklyTotal>0 && v_userWeeklyTotal<5000){
+		v_userInfo='<div class="d-block"><span class="font-s">今週(～'+v_userNextCloseDate+')の<br>お買いもの合計</span>'+v_userWeeklyTotal+'<span class="font-s">円です！<br>5000円以上で</span><span class="red">送料無料</span></div>';
+	}else if(v_userWeeklyTotal>5000){
+		v_userInfo='<div class="d-block"><span class="font-s">今週(～'+v_userNextCloseDate+')の<br>お買いもの合計</span>'+v_userWeeklyTotal+'<span class="font-s">円です！<br><div id="shipping"><svg width="80px" height="50px" viewBox="-5 0 100 50"><use xlink:href="#shipping" fill="#198"/></svg><div id="user_shipping_free" class="font-s">送料無料中</div></div></div>';
+	}else{
+		v_userInfo='<div class="d-block"><span class="font-s">今週(～'+v_userNextCloseDate+')は<br>まだお買いものしていません</div>';
+	}
+	
+	
+	
+	v_html='<div id="user_rank_icon"><svg width="100" height="100px" viewBox="-5 -5 100 100"><use xlink:href="#user_rank" fill="'+a_userRank[v_userMemberRank][1]+'"/></svg><div id="user_rank_name">'+a_userRank[v_userMemberRank][2]+'</div><div id="user_rank_term" class="font-s">～2014/7/8</div></div><div id="user_name" class="st1">'+v_userName+'</div>'+v_userInfo;
+	document.getElementById('user_data').innerHTML=v_html;
+	f_log(v_userName+"/"+v_userSex+"/"+v_userMemberRank+"/"+v_userCoupon.length+"/"+v_userPoint+"/"+v_userWeeklyTotal+"/"+v_userCpmRank+"/"+v_userHasRegularPurchase);
 }
 
 
 //文字が入力された時に反応ログイン表示
 var t_pass = null;	　//passが入力されたか監視
 var t_id=null;		//idが入力されたか監視
-f_checkking();
 function f_checkking(){
 	var inputPass = document.getElementById("np_pass");
 	var inputId = document.getElementById("np_id");
